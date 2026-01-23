@@ -21,3 +21,7 @@ for (const item of projectList) {
     console.log(`   - ${entry.title}`);
   }
 }
+
+// testing DOM
+import { sidebar } from "./sidebar";
+sidebar().render(projectList);
