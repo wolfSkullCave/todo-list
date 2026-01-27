@@ -27,6 +27,9 @@
 .tasks {
   padding: 1rem;
   background: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .details {
