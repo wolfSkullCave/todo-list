@@ -17,7 +17,7 @@ function task(title, description, dueDate, priority) {
   };
 }
 
-function project(title = "My First Project") {
+function project(title) {
   const tasks = [];
   return {
     tasks,
