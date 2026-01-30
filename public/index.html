@@ -5,34 +5,19 @@
     <title>Webpack Template</title>
   </head>
   <body>
-    <div class="app">
-      <aside class="sidebar" id="sidebar">
-        <!-- Project list -->
-         <div class="projectsHeader">
-          <h2>Projects</h2>
-          <div>
-            <input type="text" id="addProjectInput" placeholder="Add Project" />
-            <button type="button" id="addProjectBtn">+</button>
-          </div>
-        </div>
+    <div>
+      <h2>Projects</h2>
 
-        <div class="projectsList" id="projectsList"></div>
-      </aside>
-      <main class="tasks" id="taskbar">
-        <!-- Todos -->
-        <div class="taskHeader">
-          <h2 id="taskBarHeading">Tasks List</h2>
-          <div class="addTaskDiv">
-            <input type="text" id="addTaskInput" placeholder="Add a Task">
-            <button id="addTaskBtn">+</button>
-          </div>
-        </div>
-        <div id="taskContent"></div>
-      </main>
-      <section class="details" id="details">
-        <!-- Expanded todo details -->
-        <h2>Due Soon</h2>
-      </section>
+      <div>
+        <input
+          type="text"
+          id="projectNameInput"
+          placeholder="Enter project name"
+        />
+        <button id="addProjectBtn">Add Project</button>
+      </div>
+
+      <div id="projectsDiv"></div>
     </div>
   </body>
 </html>

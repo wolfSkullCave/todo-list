@@ -1,34 +1,37 @@
-function createTask(title, desc, duDate, priority = "normal") {
-  return {
-    title,
-    desc,
-    duDate,
-    priority,
-    completed: false,
+import { task } from "./task";
 
-    toggleComplete() {
-      this.completed = !this.completed;
-    },
-  };
-}
-
-function createProject(name) {
+export function project(name) {
   return {
     name,
     tasks: [],
 
-    addTask(task) {
-      this.tasks.push(createTask(task));
+    addTask(name, desc, duDate, priority) {
+      const newTask = task(name, desc, duDate, priority);
+      this.tasks.push(newTask);
     },
 
-    removeTask(taskTitle) {
-      this.tasks = this.tasks.filter((t) => t.title !== taskTitle);
+    renderProjects() {
+      const div = document.getElementById("projectsDiv");
+      div.innerHtml = "";
+
+      const h3 = document.createElement("h3");
+      h3.textContent = this.name;
+
+      div.appendChild(h3);
     },
 
-    listTasks() {
-      return this.tasks;
+    renderTasks() {
+      const div = document.getElementById("projectsDiv");
+      const ul = document.createElement("ul");
+      const li = document.createElement("li");
+
+      this.tasks.forEach((t) => {
+        li.textContent = t.name;
+        ul.appendChild(li);
+      });
+
+      div.appendChild(ul);
     },
   };
 }
 
-export { createTask, createProject };
