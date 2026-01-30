@@ -1,34 +1,34 @@
-function task(title, description, dueDate, priority) {
-  const completed = false;
-  const notes = [];
+function createTask(title, desc, duDate, priority = "normal") {
   return {
     title,
-    description,
-    dueDate,
+    desc,
+    duDate,
     priority,
-    completed,
-    notes,
-    addNote(content) {
-      this.notes.push(content);
-    },
-    removeNote(index) {
-      this.notes.splice(index, 1);
+    completed: false,
+
+    toggleComplete() {
+      this.completed = !this.completed;
     },
   };
 }
 
-function project(title) {
-  const tasks = [];
+function createProject(name) {
   return {
-    tasks,
-    title,
+    name,
+    tasks: [],
+
     addTask(task) {
-      this.tasks.push(task);
+      this.tasks.push(createTask(task));
     },
-    removeTask(index) {
-      this.tasks.splice(index, 1);
+
+    removeTask(taskTitle) {
+      this.tasks = this.tasks.filter((t) => t.title !== taskTitle);
+    },
+
+    listTasks() {
+      return this.tasks;
     },
   };
 }
 
-export { task, project };
+export { createTask, createProject };

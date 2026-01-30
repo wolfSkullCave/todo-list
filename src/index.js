@@ -1,23 +1,75 @@
 import "./styles.css";
-
-console.log("Hello Webpack Template!");
+import './reset.css';
+import { createTask, createProject } from "./project.js";
 
 const projectsArr = [];
+let currentProject = null;
 
-import { task, project } from "./project.js";
+renderProjects()
+addProject('Study',projectsArr)
+addProject('Chores',projectsArr)
+renderProjects();
+projectsArr[0].addTask('javascript', 'odin project', 'weekly')
 
-const chores = project("Chores");
-const study = project("Study");
+const addTaskBtn = document.getElementById('addTaskBtn')
+addTaskBtn.addEventListener('click',addTask2)
 
-projectsArr.push(chores);
-projectsArr.push(study);
+function addProject(projectName, projectArr){
+  const newProject = createProject(projectName)
+  projectArr.push(newProject)
+}
 
-chores.addTask("clean dishes");
-study.addTask("the odin project");
+function addTask2(){
+  console.log(currentProject)
+  const task = document.getElementById('addTaskInput')
+  console.log(task.value)
 
-import { ButtonFactory, Sidebar } from "./sidebar.js";
-const sidebar = new Sidebar({
-  container: document.getElementById("projectsList"),
-  buttonFactory: new ButtonFactory(),
-});
-sidebar.render();
+
+  task.value = ''
+}
+
+function findIndex(arr, item){
+  return arr.findIndex(i => i.name === item)
+}
+
+function renderProjects(){
+  const container = document.getElementById('projectsList')
+
+  container.innerHTML = ''
+  projectsArr.forEach(p => {
+    const btn = document.createElement('button')
+    btn.textContent = p.name
+    container.appendChild(btn)
+
+    btn.addEventListener('click',()=>{
+      currentProject = btn
+      // console.log(p.tasks)
+      const h2 = document.getElementById('taskBarHeading')
+      h2.textContent = p.name
+      renderTasks(p)
+    })
+  })
+}
+
+function renderTasks(project){
+  const tasks = project.tasks
+  // console.log(tasks)
+
+  const container = document.getElementById('taskContent')
+  container.innerHTML = ''
+
+  tasks.forEach(t => {
+    const checkbox = document.createElement('input')
+    checkbox.type = "checkbox"
+    checkbox.id = `${project.name}#${t.title}`
+
+    const label = document.createElement('label')
+    label.textContent = t.title
+    label.htmlFor = checkbox.id
+
+    container.appendChild(checkbox)
+    container.appendChild(label)
+
+  })
+}
+
