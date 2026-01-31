@@ -4,35 +4,45 @@ const projects = [];
 
 const input = document.getElementById("projectNameInput");
 const btn = document.getElementById("addProjectBtn");
+const projectsDiv = document.getElementById("projectsDiv");
 
-export function dom() {
-  btn.addEventListener("click", () => {
-    const newProject = project(input.value);
+function renderProjects() {
+  projectsDiv.innerHTML = "";
 
-    projects.push(newProject);
-    console.log(projects);
+  // render projects from array
+  projects.forEach((p) => {
+    const h3 = document.createElement("h3");
+    h3.textContent = p.name;
+    projectsDiv.appendChild(h3);
 
-    input.value = "";
+    // render tasks from array
+    const ul = document.createElement("ul");
+    p.tasks.forEach((t) => {
+      const li = document.createElement("li");
 
-    newProject.renderProjects();
-    newProject.renderTasks();
+      li.textContent = t.name;
+      ul.appendChild(li);
+    });
+
+    projectsDiv.appendChild(ul);
   });
 }
 
-function test(input) {
-  console.log(input);
+function addProject(name) {
+  if (!name.trim()) return;
+  const newProject = project(name);
+  projects.push(newProject);
+  renderProjects();
 }
 
-export function dom2() {
-  return {
-    renderProjects(div, projects) {
-      div.innerHTML = "";
+export function dom() {
+  btn.addEventListener("click", () => {
+    addProject(input.value);
+    input.value = "";
+  });
+}
 
-      projects.forEach((p) => {
-        const h3 = document.createElement("h3");
-        h3.textContent = p.name;
-        div.appendChild(h3);
-      });
-    },
-  };
+// test function for debugging
+function test(input) {
+  console.log(input);
 }
