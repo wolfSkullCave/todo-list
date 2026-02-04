@@ -1,48 +1,45 @@
-import { project } from "./project";
+import { createProject } from "./project";
 
-const projects = [];
+export class Dom {
+  constructor(projectsList = []) {
+    this.projectsList = projectsList;
 
-const input = document.getElementById("projectNameInput");
-const btn = document.getElementById("addProjectBtn");
-const projectsDiv = document.getElementById("projectsDiv");
+    this.projectsDiv = document.getElementById("projectsDiv");
+    this.projectsUl = document.getElementById("projectsUl");
 
-function renderProjects() {
-  projectsDiv.innerHTML = "";
+    this.newProjectsInput = document.getElementById("projectNameInput");
+    this.newProjectBtn = document.getElementById("addProjectBtn");
 
-  // render projects from array
-  projects.forEach((p) => {
-    const h3 = document.createElement("h3");
-    h3.textContent = p.name;
-    projectsDiv.appendChild(h3);
-
-    // render tasks from array
-    const ul = document.createElement("ul");
-    p.tasks.forEach((t) => {
-      const li = document.createElement("li");
-
-      li.textContent = t.name;
-      ul.appendChild(li);
+    this.newProjectBtn.addEventListener("click", () => {
+      if (!this.newProjectsInput.value.trim()) return;
+      this.addProject(this.newProjectsInput.value);
+      this.newProjectsInput.value = "";
     });
+  }
 
-    projectsDiv.appendChild(ul);
-  });
-}
+  renderProjects() {
+    this.projectsDiv.innerHTML = "";
 
-function addProject(name) {
-  if (!name.trim()) return;
-  const newProject = project(name);
-  projects.push(newProject);
-  renderProjects();
-}
+    // render projects from array
+    this.projectsList.forEach((p) => {
+      const button = document.createElement("button");
+      button.textContent = p.name;
+      button.id = this.getIndex(p.name, this.projectsList);
 
-export function dom() {
-  btn.addEventListener("click", () => {
-    addProject(input.value);
-    input.value = "";
-  });
-}
+      this.projectsDiv.appendChild(button);
+    });
+  }
 
-// test function for debugging
-function test(input) {
-  console.log(input);
+  addProject(newProject) {
+    this.projectsList.push(createProject(newProject)); // add newProject to projectsList array
+    this.renderProjects();
+  }
+
+  getIndex(name, arr) {
+    return arr.findIndex((i) => i.name === name);
+  }
+
+  listProjects() {
+    console.log(this.projectsList);
+  }
 }

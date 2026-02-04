@@ -1,4 +1,4 @@
-export function task(name, desc, duDate, priority) {
+export function createTask(name, desc, duDate, priority) {
   return {
     name,
     desc,
