@@ -27,7 +27,6 @@ export class Dom {
       button.id = this.getIndex(p.name, this.projectsList);
 
       button.addEventListener("click", () => {
-        this.listTasks(button.id);
         this.renderTasks(button.id);
       });
 
