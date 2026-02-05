@@ -26,7 +26,13 @@ export class Dom {
       button.textContent = p.name;
       button.id = this.getIndex(p.name, this.projectsList);
 
+      button.addEventListener("click", () => {
+        this.listTasks(button.id);
+        this.renderTasks(button.id);
+      });
+
       this.projectsDiv.appendChild(button);
+      this.renderTasks();
     });
   }
 
@@ -41,5 +47,35 @@ export class Dom {
 
   listProjects() {
     console.log(this.projectsList);
+  }
+
+  listTasks(index = 0) {
+    console.log(this.projectsList[index].tasks);
+    console.log(index);
+    console.log(this.projectsList[index]);
+  }
+
+  renderTasks(index = 0) {
+    const tasksDiv = document.getElementById("tasksDiv");
+    const h2 = document.createElement("h2");
+
+    tasksDiv.innerHTML = "";
+    h2.textContent = this.projectsList[index].name;
+
+    tasksDiv.appendChild(h2);
+
+    if (this.projectsList[index].tasks.length > 0) {
+      this.projectsList[index].tasks.forEach((t) => {
+        const input = document.createElement("input");
+        input.type = "checkbox";
+        input.textContent = t.name;
+
+        tasksDiv.appendChild(input);
+      });
+    } else {
+      const p = document.createElement("p");
+      p.textContent = "No tasks available";
+      tasksDiv.appendChild(p);
+    }
   }
 }
