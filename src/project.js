@@ -5,7 +5,7 @@ export function createProject(name) {
     name,
     tasks: [],
 
-    addTask(name, desc, duDate, priority) {
+    addTask({ name, desc, duDate, priority }) {
       const newTask = createTask(name, desc, duDate, priority);
       this.tasks.push(newTask);
     },

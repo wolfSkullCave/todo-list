@@ -55,21 +55,27 @@ export class Dom {
   }
 
   renderTasks(index = 0) {
-    const tasksDiv = document.getElementById("tasksDiv");
-    const h2 = document.createElement("h2");
-
+    const h2 = document.getElementById("tasksHeading");
+    const tasksDiv = document.getElementById("tasksDivContent");
     tasksDiv.innerHTML = "";
     h2.textContent = this.projectsList[index].name;
 
-    tasksDiv.appendChild(h2);
-
     if (this.projectsList[index].tasks.length > 0) {
       this.projectsList[index].tasks.forEach((t) => {
+        const checkboxDiv = document.createElement("div");
+        checkboxDiv.classList.add("checkboxDiv");
+
         const input = document.createElement("input");
         input.type = "checkbox";
-        input.textContent = t.name;
+        input.name = t.name;
 
-        tasksDiv.appendChild(input);
+        const label = document.createElement("label");
+        label.id = t.name;
+        label.textContent = t.name;
+
+        checkboxDiv.appendChild(input);
+        checkboxDiv.appendChild(label);
+        tasksDiv.appendChild(checkboxDiv);
       });
     } else {
       const p = document.createElement("p");

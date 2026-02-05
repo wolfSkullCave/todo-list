@@ -128,3 +128,8 @@ div#projectsDiv {
 #projectsDiv button:hover {
   color: grey;
 }
+
+.checkboxDiv {
+  display: flex;
+  gap: 0.6rem;
+}
