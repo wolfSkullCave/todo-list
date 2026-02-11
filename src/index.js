@@ -1,7 +1,13 @@
+// Style sheets
 import "./styles.css";
-import { createProject } from "./project.js";
-import { Dom } from "./dom.js";
 import "./components/card.css";
+
+// GUI components
+import { Dom } from "./dom.js";
+import { addTaskDOM } from "./gui/addTaskDOM.js";
+
+// logic components
+import { createProject } from "./project.js";
 
 const dom = new Dom();
 // dom.renderProjects();
@@ -21,5 +27,15 @@ dom.projectsList[0].addTask({
   duDate: "15 March",
   priority: "low",
 });
+
+dom.projectsList[0].addTask({
+  name: "node js",
+  desc: "Study node js",
+  duDate: "15 March",
+  priority: "low",
+});
+
 // dom.renderTasks();
 dom.renderCard();
+
+addTaskDOM();

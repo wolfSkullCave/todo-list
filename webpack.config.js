@@ -11,11 +11,23 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.css$/i,
-        use: ["style-loader", "css-loader"],
+        test: /\.module\.css$/i, // only files ending in .module.css
+        use: [
+          "style-loader",
+          {
+            loader: "css-loader",
+            options: { modules: true },
+          },
+        ],
+      },
+      {
+        test: /\.css$/i, // all other CSS files
+        exclude: /\.module\.css$/i,
+        use: ["style-loader", "css-loader"], // no modules
       },
     ],
   },
+
   plugins: [
     new HtmlWebpackPlugin({
       template: "./public/index.html",

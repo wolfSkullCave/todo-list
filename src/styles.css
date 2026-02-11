@@ -133,3 +133,10 @@ div#projectsDiv {
   display: flex;
   gap: 0.6rem;
 }
+
+.taskHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}

@@ -38,7 +38,35 @@
 
         <div id="tasksDiv">
           <section>
-            <h2 id="tasksHeading">Projects</h2>
+            <div class="taskHeader">
+              <h2 id="tasksHeading">Projects</h2>
+
+              <!-- Button to open form -->
+              <button id="openFormBtn">Add Task</button>
+
+              <!-- Hidden pop-up form -->
+              <div id="popupForm" class="popup">
+                <div class="popup-content">
+                  <span id="closeFormBtn" class="close">&times;</span>
+                  <h2>Add a New Task</h2>
+                  <form id="taskForm">
+                    <label for="taskName">Task Name:</label>
+                    <input type="text" id="taskName" name="taskName" required />
+
+                    <label for="taskDesc">Description:</label>
+                    <textarea id="taskDesc" name="taskDesc"></textarea>
+
+                    <label for="taskPriority">Priority:</label>
+                    <select name="taskPriority" id="taskPriority">
+                      <option value="low">Low</option>
+                      <option value="medium">Medium</option>
+                      <option value="high">High</option>
+                    </select>
+                  </form>
+                  <button type="submit">Save Task</button>
+                </div>
+              </div>
+            </div>
             <div id="tasksDivContent"></div>
 
             <!-- Hidden template -->

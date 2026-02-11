@@ -1,5 +1,4 @@
 import { createProject } from "./project";
-import { createCard } from "./components/card";
 
 export class Dom {
   constructor(projectsList = []) {
