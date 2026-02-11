@@ -1,0 +1,19 @@
+.card {
+  border: 1px solid #ccc;
+  padding: 1rem;
+  margin: 0.5rem;
+  border-radius: 8px;
+}
+.card-img {
+  width: 100%;
+  border-radius: 4px;
+}
+
+div#card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.card-title {
+  text-transform: capitalize;
+}

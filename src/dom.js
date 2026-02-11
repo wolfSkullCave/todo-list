@@ -1,4 +1,5 @@
 import { createProject } from "./project";
+import { createCard } from "./components/card";
 
 export class Dom {
   constructor(projectsList = []) {
@@ -24,14 +25,17 @@ export class Dom {
     this.projectsList.forEach((p) => {
       const button = document.createElement("button");
       button.textContent = p.name;
-      button.id = this.getIndex(p.name, this.projectsList);
+      button.id = this.getIndex(p.name);
 
       button.addEventListener("click", () => {
-        this.renderTasks(button.id);
+        // this.renderTasks(button.id);
+        // console.log(p);
+        this.renderCard(button.id);
       });
 
       this.projectsDiv.appendChild(button);
-      this.renderTasks();
+      // this.renderTasks();
+      this.renderCard();
     });
   }
 
@@ -40,7 +44,7 @@ export class Dom {
     this.renderProjects();
   }
 
-  getIndex(name, arr) {
+  getIndex(name, arr = this.projectsList) {
     return arr.findIndex((i) => i.name === name);
   }
 
@@ -54,11 +58,43 @@ export class Dom {
     console.log(this.projectsList[index]);
   }
 
-  renderTasks(index = 0) {
+  renderCard(index = 0) {
+    const container = document.getElementById("card-container");
+    const template = document.getElementById("card-template");
+
+    const data = this.projectsList[index].tasks;
+
+    // console.log(data);
+    this.changeTaskHeading(index);
+
+    container.innerHTML = "";
+
+    data.forEach((task) => {
+      // clone the template content
+      const card = template.content.cloneNode(true);
+
+      // populate fields
+      card.querySelector(".card-title").textContent = task.name;
+      card.querySelector(".card-description").textContent = task.desc;
+      card.querySelector(".card-priority").textContent = task.priority;
+      card.querySelector(".card-duDate").textContent = task.duDate;
+      card.querySelector(".card-status").textContent = task.completed;
+
+      // append to contaienr
+      container.appendChild(card);
+    });
+  }
+
+  changeTaskHeading(index = 0) {
     const h2 = document.getElementById("tasksHeading");
+    h2.textContent = this.projectsList[index].name;
+  }
+
+  renderTasks(index = 0) {
     const tasksDiv = document.getElementById("tasksDivContent");
     tasksDiv.innerHTML = "";
-    h2.textContent = this.projectsList[index].name;
+
+    this.changeTaskHeading(index);
 
     if (this.projectsList[index].tasks.length > 0) {
       this.projectsList[index].tasks.forEach((t) => {

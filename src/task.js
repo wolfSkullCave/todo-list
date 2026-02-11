@@ -4,7 +4,7 @@ export function createTask(name, desc, duDate, priority) {
     desc,
     duDate,
     priority,
-    checked: false,
+    completed: false,
 
     toggleCheck() {
       this.checked = !this.checked;
