@@ -3,8 +3,20 @@
 // ============================================
 
 // Import stylesheets (these are bundled by webpack)
-import "./css/styles.css";
+import './css/reset.css'
+// Base styles and layout
+import "./css/base.css";
+import "./css/layout.css";
+// Header and footer
+import "./css/header.css";
+import "./css/footer.css";
+// Component styles
+import "./css/sidebar.css";
+import "./css/forms.css";
+import "./css/components.css";
+// Page-specific styles
 import "./css/card.css";
+import "./css/popUpForm.css";
 
 // Import the main DOM coordinator class
 import { Dom } from "./dom.js";

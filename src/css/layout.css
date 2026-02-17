@@ -1,0 +1,38 @@
+/* ============================================
+   LAYOUT STYLES
+   Grid layout, flexbox, and spacing utilities
+   ============================================ */
+
+/* Main grid layout for sidebar + content */
+.grid-layout {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 2rem;
+    padding: 2rem;
+}
+
+/* Features grid - responsive layout */
+.features {
+    flex: 3;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+/* Generic feature card styling */
+.feature {
+    background: #fff;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    text-align: center;
+}
+
+/* Aside/general sidebar styling */
+aside {
+    flex: 1;
+    background: #fff;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}

@@ -1,0 +1,40 @@
+/* ============================================
+   COMPONENT STYLES
+   Task checkboxes, lists, and interactive elements
+   ============================================ */
+
+/* Checkbox task item container */
+.checkboxDiv {
+    display: flex;
+    gap: 0.6rem;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.checkboxDiv:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Checkbox input styling */
+.checkboxDiv input[type="checkbox"] {
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+}
+
+/* Label for checkbox */
+.checkboxDiv label {
+    flex: 1;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+}
+
+/* Checked state styling */
+.checkboxDiv input[type="checkbox"]:checked+label {
+    text-decoration: line-through;
+    color: #999;
+}
