@@ -1,121 +1,95 @@
-import { createProject } from "./project";
+import { ProjectManager } from "./projectManager.js";
+import { CardRenderer } from "./cardRenderer.js";
+import { UIManager } from "./uiManager.js";
 
+/**
+ * Dom class serves as the main coordinator/facade for the application.
+ * It orchestrates the interaction between:
+ * - ProjectManager: handles project data
+ * - CardRenderer: handles rendering tasks
+ * - UIManager: handles user interactions
+ * 
+ * This class maintains the public API and delegates work to specialized modules.
+ */
 export class Dom {
+  /**
+   * Initializes the Dom coordinator with its dependencies
+   * @param {Array} projectsList - Initial list of projects (optional)
+   */
   constructor(projectsList = []) {
-    this.projectsList = projectsList;
+    // Initialize specialized managers
+    this.projectManager = new ProjectManager(projectsList);
+    this.cardRenderer = new CardRenderer();
+    
+    // Pass callback to UIManager so it can notify us when projects are added
+    this.uiManager = new UIManager(
+      (projectName) => this.addProject(projectName)
+    );
 
-    this.projectsDiv = document.getElementById("projectsDiv");
-    this.projectsUl = document.getElementById("projectsUl");
-
-    this.newProjectsInput = document.getElementById("projectNameInput");
-    this.newProjectBtn = document.getElementById("addProjectBtn");
-
-    this.newProjectBtn.addEventListener("click", () => {
-      if (!this.newProjectsInput.value.trim()) return;
-      this.addProject(this.newProjectsInput.value);
-      this.newProjectsInput.value = "";
-    });
+    // Track which project is currently being viewed
+    this.currentProjectIndex = 0;
   }
 
-  renderProjects() {
-    this.projectsDiv.innerHTML = "";
-
-    // render projects from array
-    this.projectsList.forEach((p) => {
-      const button = document.createElement("button");
-      button.textContent = p.name;
-      button.id = this.getIndex(p.name);
-
-      button.addEventListener("click", () => {
-        // this.renderTasks(button.id);
-        // console.log(p);
-        this.renderCard(button.id);
-      });
-
-      this.projectsDiv.appendChild(button);
-      // this.renderTasks();
-      this.renderCard();
-    });
+  /**
+   * Getter to expose projects list for backward compatibility
+   * @returns {Array} The list of projects
+   */
+  get projectsList() {
+    return this.projectManager.projectsList;
   }
 
-  addProject(newProject) {
-    this.projectsList.push(createProject(newProject)); // add newProject to projectsList array
+  /**
+   * Adds a new project and re-renders the UI
+   * @param {string} newProjectName - Name of the new project
+   */
+  addProject(newProjectName) {
+    this.projectManager.addProject(newProjectName);
     this.renderProjects();
   }
 
-  getIndex(name, arr = this.projectsList) {
-    return arr.findIndex((i) => i.name === name);
+  /**
+   * Renders all projects as buttons and displays the first project's tasks
+   */
+  renderProjects() {
+    this.uiManager.renderProjectButtons(
+      this.projectManager.projectsList,
+      (index) => this.renderCard(index)
+    );
+    // Display the first project by default
+    this.renderCard(0);
   }
 
-  listProjects() {
-    console.log(this.projectsList);
-  }
-
-  listTasks(index = 0) {
-    console.log(this.projectsList[index].tasks);
-    console.log(index);
-    console.log(this.projectsList[index]);
-  }
-
+  /**
+   * Renders a project's tasks in card format
+   * @param {number} index - The index of the project to display (default: 0)
+   */
   renderCard(index = 0) {
-    const container = document.getElementById("card-container");
-    const template = document.getElementById("card-template");
-
-    const data = this.projectsList[index].tasks;
-
-    // console.log(data);
-    this.changeTaskHeading(index);
-
-    container.innerHTML = "";
-
-    data.forEach((task) => {
-      // clone the template content
-      const card = template.content.cloneNode(true);
-
-      // populate fields
-      card.querySelector(".card-title").textContent = task.name;
-      card.querySelector(".card-description").textContent = task.desc;
-      card.querySelector(".card-priority").textContent = task.priority;
-      card.querySelector(".card-duDate").textContent = task.duDate;
-      card.querySelector(".card-status").textContent = task.completed;
-
-      // append to contaienr
-      container.appendChild(card);
-    });
+    this.currentProjectIndex = index;
+    const project = this.projectManager.getProjectByIndex(index);
+    this.cardRenderer.renderCard(project.tasks, project.name);
   }
 
-  changeTaskHeading(index = 0) {
-    const h2 = document.getElementById("tasksHeading");
-    h2.textContent = this.projectsList[index].name;
-  }
-
+  /**
+   * Renders a project's tasks in checkbox list format (alternative view)
+   * @param {number} index - The index of the project to display (default: 0)
+   */
   renderTasks(index = 0) {
-    const tasksDiv = document.getElementById("tasksDivContent");
-    tasksDiv.innerHTML = "";
+    const project = this.projectManager.getProjectByIndex(index);
+    this.cardRenderer.renderTasks(project.tasks, project.name);
+  }
 
-    this.changeTaskHeading(index);
+  /**
+   * Logs all projects to the console for debugging
+   */
+  listProjects() {
+    this.projectManager.listProjects();
+  }
 
-    if (this.projectsList[index].tasks.length > 0) {
-      this.projectsList[index].tasks.forEach((t) => {
-        const checkboxDiv = document.createElement("div");
-        checkboxDiv.classList.add("checkboxDiv");
-
-        const input = document.createElement("input");
-        input.type = "checkbox";
-        input.name = t.name;
-
-        const label = document.createElement("label");
-        label.id = t.name;
-        label.textContent = t.name;
-
-        checkboxDiv.appendChild(input);
-        checkboxDiv.appendChild(label);
-        tasksDiv.appendChild(checkboxDiv);
-      });
-    } else {
-      const p = document.createElement("p");
-      p.textContent = "No tasks available";
-      tasksDiv.appendChild(p);
-    }
+  /**
+   * Logs all tasks for a specific project to the console for debugging
+   * @param {number} index - The index of the project (default: 0)
+   */
+  listTasks(index = 0) {
+    this.projectManager.listTasks(index);
   }
 }

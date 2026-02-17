@@ -1,19 +1,28 @@
-// Style sheets
-import "./styles.css";
-import "./components/card.css";
+// ============================================
+// MAIN ENTRY POINT FOR THE TODO LIST APP
+// ============================================
 
-// GUI components
+// Import stylesheets (these are bundled by webpack)
+import "./css/styles.css";
+import "./css/card.css";
+
+// Import the main DOM coordinator class
 import { Dom } from "./dom.js";
-import { addTaskDOM } from "./gui/addTaskDOM.js";
+// Import form setup function
+import { addTaskDOM } from "./addTaskDOM.js";
 
-// logic components
-import { createProject } from "./project.js";
+// ============================================
+// INITIALIZE THE APPLICATION
+// ============================================
 
+// Create the main Dom instance (coordinates the entire app)
 const dom = new Dom();
-// dom.renderProjects();
+
+// Add some sample projects for demonstration
 dom.addProject("Study");
 dom.addProject("Chores");
 
+// Add sample tasks to the first project (Study)
 dom.projectsList[0].addTask({
   name: "javascript",
   desc: "factory functions",
@@ -35,7 +44,8 @@ dom.projectsList[0].addTask({
   priority: "low",
 });
 
-// dom.renderTasks();
-dom.renderCard();
+// Render the initial UI with all projects and the first project's tasks
+dom.renderProjects();
 
+// Initialize the form popup functionality
 addTaskDOM();
