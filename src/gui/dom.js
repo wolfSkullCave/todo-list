@@ -1,6 +1,9 @@
-import { ProjectManager } from "./projectManager.js";
+import { ProjectManager } from "../projectManager.js";
 import { CardRenderer } from "./cardRenderer.js";
 import { UIManager } from "./uiManager.js";
+import { initTaskForm } from "./taskForm.js";
+
+import { TaskFormManager } from "../taskManager.js";
 
 /**
  * Dom class serves as the main coordinator/facade for the application.
@@ -8,7 +11,7 @@ import { UIManager } from "./uiManager.js";
  * - ProjectManager: handles project data
  * - CardRenderer: handles rendering tasks
  * - UIManager: handles user interactions
- * 
+ *
  * This class maintains the public API and delegates work to specialized modules.
  */
 export class Dom {
@@ -20,14 +23,16 @@ export class Dom {
     // Initialize specialized managers
     this.projectManager = new ProjectManager(projectsList);
     this.cardRenderer = new CardRenderer();
-    
+
     // Pass callback to UIManager so it can notify us when projects are added
-    this.uiManager = new UIManager(
-      (projectName) => this.addProject(projectName)
+    this.uiManager = new UIManager((projectName) =>
+      this.addProject(projectName),
     );
 
     // Track which project is currently being viewed
     this.currentProjectIndex = 0;
+
+    initTaskForm();
   }
 
   /**
@@ -36,6 +41,10 @@ export class Dom {
    */
   get projectsList() {
     return this.projectManager.projectsList;
+  }
+
+  get currentProject() {
+    return this.currentProjectIndex;
   }
 
   /**
@@ -53,7 +62,7 @@ export class Dom {
   renderProjects() {
     this.uiManager.renderProjectButtons(
       this.projectManager.projectsList,
-      (index) => this.renderCard(index)
+      (index) => this.renderCard(index),
     );
     // Display the first project by default
     this.renderCard(0);
@@ -92,4 +101,10 @@ export class Dom {
   listTasks(index = 0) {
     this.projectManager.listTasks(index);
   }
+
+  /**
+   * Adds a new task to the current project and re-renders
+   * @param {Object} task - The task object from the form
+   */
+  addTask(task) {}
 }

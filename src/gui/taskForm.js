@@ -1,10 +1,10 @@
-import "./css/popUpForm.css";
+import "../css/popUpForm.css";
 
 /**
  * Initializes the popup form for adding new tasks
  * Sets up event listeners for opening and closing the form modal
  */
-export function addTaskDOM() {
+export function initTaskForm() {
   // Get form elements from the DOM
   const openBtn = document.getElementById("openFormBtn");
   const popup = document.getElementById("popupForm");

@@ -16,11 +16,11 @@ export function createProject(name) {
      * Adds a new task to this project
      * @param {string} name - Task name
      * @param {string} desc - Task description
-     * @param {string} duDate - Due date for the task
+     * @param {string} dueDate - Due date for the task
      * @param {string} priority - Priority level (low, medium, high)
      */
-    addTask({ name, desc, duDate, priority }) {
-      const newTask = createTask(name, desc, duDate, priority);
+    addTask({ name, desc, dueDate, priority }) {
+      const newTask = createTask(name, desc, dueDate, priority);
       this.tasks.push(newTask);
     },
   };

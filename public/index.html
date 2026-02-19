@@ -56,6 +56,13 @@
                     <label for="taskDesc">Description:</label>
                     <textarea id="taskDesc" name="taskDesc"></textarea>
 
+                    <label for="taskDueDate"></label>
+                    <input
+                      type="datetime-local"
+                      id="taskDueDate"
+                      name="taskDueDate"
+                    />
+
                     <label for="taskPriority">Priority:</label>
                     <select name="taskPriority" id="taskPriority">
                       <option value="low">Low</option>
@@ -63,7 +70,7 @@
                       <option value="high">High</option>
                     </select>
                   </form>
-                  <button type="submit">Save Task</button>
+                  <button type="submit" id="addTaskBtn">Save Task</button>
                 </div>
               </div>
             </div>
@@ -76,7 +83,7 @@
                 <h3 class="card-title"></h3>
                 <p class="card-description"></p>
 
-                <p class="card-duDate"></p>
+                <p class="card-dueDate"></p>
                 <p class="card-priority"></p>
                 <p class="card-status"></p>
               </div>

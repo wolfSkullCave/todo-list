@@ -3,7 +3,7 @@
 // ============================================
 
 // Import stylesheets (these are bundled by webpack)
-import './css/reset.css'
+import "./css/reset.css";
 // Base styles and layout
 import "./css/base.css";
 import "./css/layout.css";
@@ -19,9 +19,9 @@ import "./css/card.css";
 import "./css/popUpForm.css";
 
 // Import the main DOM coordinator class
-import { Dom } from "./dom.js";
+import { Dom } from "./gui/dom.js";
 // Import form setup function
-import { addTaskDOM } from "./addTaskDOM.js";
+import { initTaskForm } from "./gui/taskForm.js";
 
 // ============================================
 // INITIALIZE THE APPLICATION
@@ -38,26 +38,24 @@ dom.addProject("Chores");
 dom.projectsList[0].addTask({
   name: "javascript",
   desc: "factory functions",
-  duDate: "15 Feb",
+  dueDate: "15 Feb",
   priority: "low",
 });
 
 dom.projectsList[0].addTask({
   name: "css",
   desc: "Study up on animations",
-  duDate: "15 March",
+  dueDate: "15 March",
   priority: "low",
 });
 
 dom.projectsList[0].addTask({
   name: "node js",
   desc: "Study node js",
-  duDate: "15 March",
+  dueDate: "15 March",
   priority: "low",
 });
 
 // Render the initial UI with all projects and the first project's tasks
 dom.renderProjects();
-
-// Initialize the form popup functionality
-addTaskDOM();
+console.log(dom.currentProject);

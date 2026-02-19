@@ -26,7 +26,7 @@ export class CardRenderer {
       card.querySelector(".card-title").textContent = task.name;
       card.querySelector(".card-description").textContent = task.desc;
       card.querySelector(".card-priority").textContent = task.priority;
-      card.querySelector(".card-duDate").textContent = task.duDate;
+      card.querySelector(".card-dueDate").textContent = task.dueDate;
       card.querySelector(".card-status").textContent = task.completed;
 
       // Add the card to the container
