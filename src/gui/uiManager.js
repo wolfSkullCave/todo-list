@@ -1,3 +1,6 @@
+import { TaskFormManager } from "../taskManager.js";
+import { initTaskForm } from "./taskForm.js";
+
 /**
  * UIManager handles all DOM element references and user event handling.
  * Responsible for:
@@ -27,6 +30,10 @@ export class UIManager {
       // Clear the input field
       this.newProjectsInput.value = "";
     });
+
+    initTaskForm(); // enable the hidden popup form when the user clicks the 'Add Task' button
+    this.taskManager = new TaskFormManager();
+    
   }
 
   /**

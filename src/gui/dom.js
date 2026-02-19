@@ -1,8 +1,6 @@
 import { ProjectManager } from "../projectManager.js";
 import { CardRenderer } from "./cardRenderer.js";
 import { UIManager } from "./uiManager.js";
-import { initTaskForm } from "./taskForm.js";
-
 import { TaskFormManager } from "../taskManager.js";
 
 /**
@@ -31,8 +29,6 @@ export class Dom {
 
     // Track which project is currently being viewed
     this.currentProjectIndex = 0;
-
-    initTaskForm();
   }
 
   /**
@@ -41,10 +37,6 @@ export class Dom {
    */
   get projectsList() {
     return this.projectManager.projectsList;
-  }
-
-  get currentProject() {
-    return this.currentProjectIndex;
   }
 
   /**
