@@ -29,6 +29,14 @@ export class Dom {
 
     // Track which project is currently being viewed
     this.currentProjectIndex = 0;
+
+    this.taskManager = new TaskFormManager();
+  }
+
+  addTask() {
+    this.projectsList[this.currentProjectIndex].addTask(
+      this.taskManager.getData(),
+    );
   }
 
   /**

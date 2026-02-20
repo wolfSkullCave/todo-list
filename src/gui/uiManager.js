@@ -1,4 +1,3 @@
-import { TaskFormManager } from "../taskManager.js";
 import { initTaskForm } from "./taskForm.js";
 
 /**
@@ -32,8 +31,6 @@ export class UIManager {
     });
 
     initTaskForm(); // enable the hidden popup form when the user clicks the 'Add Task' button
-    this.taskManager = new TaskFormManager();
-    
   }
 
   /**
