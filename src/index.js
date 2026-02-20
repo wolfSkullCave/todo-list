@@ -12,6 +12,16 @@ import { Project } from "./Project";
 import { Task } from "./Task";
 import { renderProjects } from "./gui/renderProjects";
 
+const defaultTask = new Task({ name: "First task", desc: "Try adding a task" });
+const defaultProject = new Project({
+  name: "default",
+  tasklist: [defaultTask],
+});
+
+const projectsList = [defaultProject];
+renderProjects(projectsList);
+
+// ------------------------------------------------------------------------------
 // testing tasks class
 const dishes = new Task({
   name: "dishes",
@@ -29,3 +39,9 @@ const study = new Project({ name: "study" });
 
 // testing renderProjects function
 renderProjects([chores, study]);
+
+// Todo: Build task renderer
+// Todo: Hook up add task to button
+// Todo: Hook up add project to button
+// Todo: Build a way to change the name of a project (edit a project's name)
+// Todo: Build a way to edit a task
