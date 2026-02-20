@@ -23,12 +23,13 @@ div#projectsDiv {
 #projectsDiv button {
     text-align: left;
     border: none;
-    color: blue;
+    color: black;
     font-weight: 600;
     cursor: pointer;
     padding: 0.5rem;
     border-radius: 4px;
     transition: color 0.2s ease;
+    text-transform: capitalize;
 }
 
 #projectsDiv button:hover {
