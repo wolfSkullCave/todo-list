@@ -1,10 +1,9 @@
-export function renderProjects(projectsList = []) {
+export function renderProjects({ projectsList = [], container }) {
+  container.innerHTML = "";
   projectsList.forEach((project) => {
-    createBtn(project.name, projectsList.indexOf(project), projectsDiv);
+    createBtn(project.name, projectsList.indexOf(project), container);
   });
 }
-
-const projectsDiv = document.getElementById("projectsDiv");
 
 function createBtn(txt, id, parentDiv) {
   const btn = document.createElement("button");

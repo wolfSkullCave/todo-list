@@ -11,15 +11,26 @@ import "./css/popUpForm.css";
 import { Project } from "./Project";
 import { Task } from "./Task";
 import { renderProjects } from "./gui/renderProjects";
+import { renderTasks } from "./gui/renderTasks";
 
-const defaultTask = new Task({ name: "First task", desc: "Try adding a task" });
+const defaultTask = new Task({
+  name: "First task",
+  desc: "Try adding a task",
+  dueDate: "Today",
+  priority: "High",
+});
 const defaultProject = new Project({
   name: "default",
   tasklist: [defaultTask],
 });
 
 const projectsList = [defaultProject];
-renderProjects(projectsList);
+
+// Render a list of projects in the sidebar as buttons
+const projectsDiv = document.getElementById("projectsDiv");
+renderProjects({ projectsList: projectsList, container: projectsDiv });
+
+// Render the tasks in a project
 
 // ------------------------------------------------------------------------------
 // testing tasks class
@@ -29,18 +40,32 @@ const dishes = new Task({
   dueDate: "daily",
   priority: "low",
 });
-console.log(dishes);
+
+const vaccume = new Task({
+  desc: "Vaccume kitchen floor",
+  name: "Vaccume kitchen",
+  dueDate: "Weekly",
+  priority: "low",
+});
 
 // testing projects class
-const chores = new Project({ name: "chores", tasklist: [dishes] });
-console.log(chores);
-
+const chores = new Project({ name: "chores", tasklist: [dishes, vaccume] });
 const study = new Project({ name: "study" });
+projectsList.push(chores);
+projectsList.push(study);
 
 // testing renderProjects function
-renderProjects([chores, study]);
+renderProjects({ projectsList: projectsList, container: projectsDiv });
 
-// Todo: Build task renderer
+// TODO: Build task renderer
+const cont = document.getElementById("card-container");
+const temp = document.getElementById("card-template");
+
+renderTasks.renderCards({ project: chores, container: cont, template: temp });
+document.getElementById("tasksHeading").textContent = "Chores";
+
+// TODO: link task renderer to side bar buttons
+
 // Todo: Hook up add task to button
 // Todo: Hook up add project to button
 // Todo: Build a way to change the name of a project (edit a project's name)

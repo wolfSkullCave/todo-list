@@ -15,19 +15,6 @@ const data = [
 const container = document.getElementById("card-container");
 const template = document.getElementById("card-template");
 
-// data.forEach((item) => {
-//   // Clone the template content
-//   const card = template.content.cloneNode(true);
-//
-//   // Populate fields
-//   card.querySelector(".card-title").textContent = item.title;
-//   card.querySelector(".card-description").textContent = item.description;
-//   card.querySelector(".card-img").src = item.img;
-//
-//   // Append to container
-//   container.appendChild(card);
-// });
-
 export function createCard(data) {
   data.forEach((item) => {
     // Clone the template content
