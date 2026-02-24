@@ -10,8 +10,7 @@ import "./css/footer.css";
 import "./css/popUpForm.css";
 import { Project } from "./Project";
 import { Task } from "./Task";
-import { renderProjects } from "./gui/renderProjects";
-import { renderTasks } from "./gui/renderTasks";
+import { render } from "./gui/render";
 
 const defaultTask = new Task({
   name: "First task",
@@ -19,6 +18,7 @@ const defaultTask = new Task({
   dueDate: "Today",
   priority: "High",
 });
+
 const defaultProject = new Project({
   name: "default",
   tasklist: [defaultTask],
@@ -26,41 +26,8 @@ const defaultProject = new Project({
 
 const projectsList = [defaultProject];
 
-// Render a list of projects in the sidebar as buttons
-const projectsDiv = document.getElementById("projectsDiv");
-renderProjects({ projectsList: projectsList, container: projectsDiv });
-
-// Render the tasks in a project
-const cont = document.getElementById("card-container");
-const temp = document.getElementById("card-template");
-
-if (projectsList.length === 1) {
-  // Initial rendering of default project
-  renderTasks.renderCards({
-    project: projectsList[0],
-    container: cont,
-    template: temp,
-  });
-  updateTasksHeading(projectsList[0].name);
-} else {
-  // Rendering of user made projects
-  const sidebar = document.querySelector("#projectsDiv");
-
-  // use event delegation to add an event listener to the sidebar buttons
-  sidebar.addEventListener("click", (event) => {
-    // find the nearest button ancestor of the click target
-    const btn = event.target.closest("button");
-    if (!btn || !sidebar.contains(btn)) return; // ignore clicks outside of buttons
-
-    renderTasks.renderCards({
-      project: projectsList[btn.id],
-      container: cont,
-      template: temp,
-    });
-
-    updateTasksHeading(projectsList[btn.id].name);
-  });
-}
+render.projects(projectsList);
+render.tasks(projectsList);
 
 // ------------------------------------------------------------------------------
 // testing tasks class
@@ -78,19 +45,42 @@ const vaccume = new Task({
   priority: "low",
 });
 
+const js = new Task({
+  name: "JavaScript",
+  desc: "Study JavaScript",
+  dueDate: "Daily",
+  priority: "Medium",
+});
+
 // testing projects class
 const chores = new Project({ name: "chores", tasklist: [dishes, vaccume] });
-const study = new Project({ name: "study" });
+const study = new Project({ name: "study", tasklist: [js] });
 projectsList.push(chores);
 projectsList.push(study);
 
-// updates the Heading in the tasks pannel/section
-function updateTasksHeading(newHeading) {
-  document.getElementById("tasksHeading").textContent = newHeading;
-}
+render.projects(projectsList);
+render.tasks(projectsList);
+// ------------------------------------------------------------------------------
 
 // Todo: Hook up add task to button
+const addTaskBtn = document.getElementById("addProjectBtn");
+addTaskBtn.addEventListener("click", () => {
+  const projectName = document.getElementById("projectNameInput");
+  const project = new Project({ name: projectName });
+
+  if (project.value !== "") {
+    console.log(project);
+    projectsList.push(project.value);
+    renderProjects({ project: projectsList, container: projectsDiv });
+  }
+});
 
 // Todo: Hook up add project to button
+
+// TODO: Add a remove/delete project button
 // Todo: Build a way to change the name of a project (edit a project's name)
 // Todo: Build a way to edit a task
+// TODO: Add a delete task button
+// TODO: Add a complete task button/checkbox
+
+// ------------------------------------------------------------------------------
