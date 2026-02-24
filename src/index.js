@@ -62,20 +62,12 @@ render.projects(projectsList);
 render.tasks(projectsList);
 // ------------------------------------------------------------------------------
 
-// Todo: Hook up add task to button
-const addTaskBtn = document.getElementById("addProjectBtn");
-addTaskBtn.addEventListener("click", () => {
-  const projectName = document.getElementById("projectNameInput");
-  const project = new Project({ name: projectName });
-
-  if (project.value !== "") {
-    console.log(project);
-    projectsList.push(project.value);
-    renderProjects({ project: projectsList, container: projectsDiv });
-  }
-});
-
 // Todo: Hook up add project to button
+// What project does the new task get assigned to?
+// Check the heading for the task name, search the name in the
+// projectsList array and add the task to that project
+
+// -----------------------------------------------------------
 
 // TODO: Add a remove/delete project button
 // Todo: Build a way to change the name of a project (edit a project's name)

@@ -31,3 +31,4 @@ export class TaskFormManager {
 document.addEventListener("DOMContentLoaded", () => {
   new TaskFormManager();
 });
+
