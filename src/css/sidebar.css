@@ -10,6 +10,7 @@
     display: flex;
     gap: 1rem;
     flex-direction: column;
+    border-radius: 8px;
 }
 
 /* Projects container - vertical flex layout */
