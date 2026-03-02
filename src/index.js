@@ -11,6 +11,7 @@ import "./css/popUpForm.css";
 import { Project } from "./Project";
 import { Task } from "./Task";
 import { render } from "./gui/render";
+import { addProject } from "./gui/newProject";
 
 const defaultTask = new Task({
   name: "First task",
@@ -28,6 +29,9 @@ const projectsList = [defaultProject];
 
 render.projects(projectsList);
 render.tasks(projectsList);
+
+// Add a new project via gui
+addProject(projectsList);
 
 // ------------------------------------------------------------------------------
 // testing tasks class
@@ -62,7 +66,6 @@ render.projects(projectsList);
 render.tasks(projectsList);
 // ------------------------------------------------------------------------------
 
-// Todo: Hook up add project to button
 // What project does the new task get assigned to?
 // Check the heading for the task name, search the name in the
 // projectsList array and add the task to that project

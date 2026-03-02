@@ -7,6 +7,7 @@ export const render = {
     const projectsDiv = document.getElementById("projectsDiv");
     renderProjects({ projectsList: projectsList, container: projectsDiv });
   },
+
   tasks(projectsList) {
     const cont = document.getElementById("card-container");
     const temp = document.getElementById("card-template");
@@ -39,6 +40,8 @@ export const render = {
       });
     }
   },
+
+  
 };
 
 function updateTasksHeading(newHeading) {
