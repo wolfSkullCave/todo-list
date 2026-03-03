@@ -10,7 +10,7 @@ import "./css/footer.css";
 import "./css/popUpForm.css";
 import { Project } from "./Project";
 import { Task } from "./Task";
-import { render } from "./gui/render";
+import { Render } from "./gui/render";
 import { addProject } from "./gui/newProject";
 
 const defaultTask = new Task({
@@ -27,13 +27,25 @@ const defaultProject = new Project({
 
 const projectsList = [defaultProject];
 
-render.projects(projectsList);
-render.tasks(projectsList);
+// render.projects(projectsList);
+// render.tasks(projectsList);
 
-// Add a new project via gui
+// testing new render class
+const projectsDiv = document.getElementById("projectsDiv");
+const cardDiv = document.getElementById("card-container");
+const cardTemp = document.getElementById("card-template");
+const sidebar = document.querySelector("#projectsDiv");
+
+const rend = new Render(projectsList, projectsDiv, cardDiv, cardTemp);
+rend.projects();
+rend.sidebar(sidebar);
+rend.task(projectsList[0]); // renders the first project's tasks
+
+// Add a new project via gui input field
 addProject(projectsList);
 
 // ------------------------------------------------------------------------------
+
 // testing tasks class
 const dishes = new Task({
   name: "dishes",
@@ -62,13 +74,59 @@ const study = new Project({ name: "study", tasklist: [js] });
 projectsList.push(chores);
 projectsList.push(study);
 
-render.projects(projectsList);
-render.tasks(projectsList);
+// render.projects(projectsList);
+// render.tasks(projectsList);
+
+// new render class testing
+rend.projects();
+
 // ------------------------------------------------------------------------------
 
+// TODO: Write code to make the add Task button work
 // What project does the new task get assigned to?
 // Check the heading for the task name, search the name in the
 // projectsList array and add the task to that project
+
+import { initTaskForm } from "./gui/taskForm";
+initTaskForm();
+const addTaskBtn = document.getElementById("openFormBtn");
+const saveTaskBtn = document.getElementById("addTaskBtn");
+
+const taskName = document.getElementById("taskName");
+const taskDesc = document.getElementById("taskDesc");
+const taskPriority = document.getElementById("taskPriority");
+const taskDueDate = document.getElementById("taskDueDate");
+
+let currentProjectIndex = "";
+// Find the current project
+const tasksHeading = document.getElementById("tasksHeading");
+addTaskBtn.addEventListener("click", () => {
+  const currentProject = projectsList.find(
+    (p) => p.name === tasksHeading.textContent
+  );
+  currentProjectIndex = projectsList.findIndex(
+    (p) => p.name === tasksHeading.textContent
+  );
+  console.log("Current project: ", currentProject);
+  console.log("Index: ", projectsList[currentProjectIndex]);
+});
+
+// Create a new task object
+saveTaskBtn.addEventListener("click", () => {
+  const newTask = new Task({
+    name: taskName.value,
+    desc: taskDesc.value,
+    dueDate: taskDueDate.value,
+    priority: taskPriority.value,
+  });
+
+  // Add new task to current project
+  projectsList[currentProjectIndex].addTask(newTask);
+
+  // Close pop up when save button is clicked
+  const popup = document.getElementById("popupForm");
+  popup.style.display = "none";
+});
 
 // -----------------------------------------------------------
 

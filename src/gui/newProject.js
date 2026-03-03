@@ -1,4 +1,4 @@
-import { render } from "./render";
+import { Render } from "./render";
 import { Project } from "../Project";
 
 export function addProject(projectsList) {
