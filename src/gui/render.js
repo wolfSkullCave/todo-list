@@ -1,5 +1,5 @@
 import { renderProjects } from "./renderProjects";
-import { renderTasks, renderCards } from "./renderTasks";
+import { renderCards } from "./renderTasks";
 
 // Consolodates rendering of projects and tasks
 export class Render {
