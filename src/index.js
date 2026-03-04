@@ -11,7 +11,8 @@ import "./css/popUpForm.css";
 import { Project } from "./Project";
 import { Task } from "./Task";
 import { Render } from "./gui/render";
-import { addProject } from "./gui/newProject";
+import { initNewProjectsBtn } from "./gui/newProject";
+import { populateStorage, retrieveStorage } from "./localstorage";
 
 const defaultTask = new Task({
   name: "First task",
@@ -26,9 +27,7 @@ const defaultProject = new Project({
 });
 
 const projectsList = [defaultProject];
-
-// render.projects(projectsList);
-// render.tasks(projectsList);
+populateStorage(defaultProject.name, defaultProject);
 
 // testing new render class
 const projectsDiv = document.getElementById("projectsDiv");
@@ -44,7 +43,9 @@ rend.updateTasksHeading(projectsList[0].name);
 
 // Add a new project via gui input field
 // TODO: refactor this function
-addProject(projectsList);
+initNewProjectsBtn(function () {
+  rend.projects();
+});
 rend.sidebar(sidebar);
 
 // ------------------------------------------------------------------------------
@@ -75,7 +76,9 @@ const js = new Task({
 const chores = new Project({ name: "chores", tasklist: [dishes, vaccume] });
 const study = new Project({ name: "study", tasklist: [js] });
 projectsList.push(chores);
+populateStorage(chores.name, chores);
 projectsList.push(study);
+populateStorage(study.name, study);
 
 rend.projects(); // Renders the new projects in the sidebar
 
@@ -96,7 +99,6 @@ const taskDesc = document.getElementById("taskDesc");
 const taskPriority = document.getElementById("taskPriority");
 const taskDueDate = document.getElementById("taskDueDate");
 
-
 // -----------------------------------------------------------
 
 // TODO: Add a remove/delete project button
@@ -104,6 +106,6 @@ const taskDueDate = document.getElementById("taskDueDate");
 // Todo: Build a way to edit a task
 // TODO: Add a delete task button
 // TODO: Add a complete task button/checkbox
-// TODO: Look into storing projects in local storage instead of an array.
+// TODO: Look into storing projects in local storage instead of an array.✅
 
 // ------------------------------------------------------------------------------
