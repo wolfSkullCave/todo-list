@@ -9,6 +9,7 @@ export function initTaskForm() {
   const openBtn = document.getElementById("openFormBtn");
   const popup = document.getElementById("popupForm");
   const closeBtn = document.getElementById("closeFormBtn");
+  const saveTaskBtn = document.getElementById("addTaskBtn");
 
   // Show popup when user clicks the "Add Task" button
   openBtn.addEventListener("click", () => {
@@ -26,5 +27,10 @@ export function initTaskForm() {
     if (e.target === popup) {
       popup.style.display = "none";
     }
+  });
+
+  // Close popup when save button is clicked
+  saveTaskBtn.addEventListener("click", () => {
+    popup.style.display = "none";
   });
 }

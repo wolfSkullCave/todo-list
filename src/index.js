@@ -40,9 +40,12 @@ const rend = new Render(projectsList, projectsDiv, cardDiv, cardTemp);
 rend.projects();
 rend.sidebar(sidebar);
 rend.task(projectsList[0]); // renders the first project's tasks
+rend.updateTasksHeading(projectsList[0].name);
 
 // Add a new project via gui input field
+// TODO: refactor this function
 addProject(projectsList);
+rend.sidebar(sidebar);
 
 // ------------------------------------------------------------------------------
 
@@ -74,11 +77,7 @@ const study = new Project({ name: "study", tasklist: [js] });
 projectsList.push(chores);
 projectsList.push(study);
 
-// render.projects(projectsList);
-// render.tasks(projectsList);
-
-// new render class testing
-rend.projects();
+rend.projects(); // Renders the new projects in the sidebar
 
 // ------------------------------------------------------------------------------
 
@@ -97,36 +96,6 @@ const taskDesc = document.getElementById("taskDesc");
 const taskPriority = document.getElementById("taskPriority");
 const taskDueDate = document.getElementById("taskDueDate");
 
-let currentProjectIndex = "";
-// Find the current project
-const tasksHeading = document.getElementById("tasksHeading");
-addTaskBtn.addEventListener("click", () => {
-  const currentProject = projectsList.find(
-    (p) => p.name === tasksHeading.textContent
-  );
-  currentProjectIndex = projectsList.findIndex(
-    (p) => p.name === tasksHeading.textContent
-  );
-  console.log("Current project: ", currentProject);
-  console.log("Index: ", projectsList[currentProjectIndex]);
-});
-
-// Create a new task object
-saveTaskBtn.addEventListener("click", () => {
-  const newTask = new Task({
-    name: taskName.value,
-    desc: taskDesc.value,
-    dueDate: taskDueDate.value,
-    priority: taskPriority.value,
-  });
-
-  // Add new task to current project
-  projectsList[currentProjectIndex].addTask(newTask);
-
-  // Close pop up when save button is clicked
-  const popup = document.getElementById("popupForm");
-  popup.style.display = "none";
-});
 
 // -----------------------------------------------------------
 
@@ -135,5 +104,6 @@ saveTaskBtn.addEventListener("click", () => {
 // Todo: Build a way to edit a task
 // TODO: Add a delete task button
 // TODO: Add a complete task button/checkbox
+// TODO: Look into storing projects in local storage instead of an array.
 
 // ------------------------------------------------------------------------------
