@@ -30,7 +30,7 @@ export function initTaskForm() {
   });
 
   // Close popup when save button is clicked
-  saveTaskBtn.addEventListener("click", () => {
-    popup.style.display = "none";
-  });
+  // saveTaskBtn.addEventListener("click", () => {
+  //   popup.style.display = "none";
+  // });
 }

@@ -1,21 +1,17 @@
 import { retrieveStorage } from "../localstorage";
-import { renderProjects, renderProjects2 } from "./renderProjects";
+import { renderProjects2 } from "./renderProjects";
 import { renderCards } from "./renderTasks";
 
 // Consolodates rendering of projects and tasks
 export class Render {
-  constructor(projectList, projectDiv, taskDiv, cardTemplate) {
-    this.projectList = projectList;
+  constructor(projectDiv, taskDiv, cardTemplate) {
     this.projectDiv = projectDiv;
     this.taskDiv = taskDiv;
     this.cardTemplate = cardTemplate;
+    this.currentProject = undefined;
   }
 
   projects() {
-    // renderProjects({
-    //   projectsList: this.projectList,
-    //   container: this.projectDiv,
-    // });
     renderProjects2(this.projectDiv);
   }
 
@@ -33,6 +29,7 @@ export class Render {
       this.task(project);
 
       this.updateTasksHeading(project.name);
+      this.currentProject = project.name;
     });
   }
 
@@ -46,5 +43,9 @@ export class Render {
 
   updateTasksHeading(newHeading) {
     document.getElementById("tasksHeading").textContent = newHeading;
+  }
+
+  getCurrentProject() {
+    return this.currentProject;
   }
 }
