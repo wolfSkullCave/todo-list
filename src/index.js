@@ -17,7 +17,10 @@ import {
   populateStorage,
   retrieveStorage,
 } from "./localstorage";
+import { initTaskForm } from "./gui/taskForm";
+import { addTask } from "./gui/newTaskBtn";
 
+// create inital task
 const defaultTask = new Task({
   name: "First task",
   desc: "Try adding a task",
@@ -25,11 +28,13 @@ const defaultTask = new Task({
   priority: "High",
 });
 
+// create initial project
 const defaultProject = new Project({
   name: "default",
   tasklist: [defaultTask],
 });
 
+// render initial project
 populateStorage(defaultProject.name, defaultProject);
 
 // testing new render class
@@ -38,7 +43,8 @@ const cardDiv = document.getElementById("card-container");
 const cardTemp = document.getElementById("card-template");
 const sidebar = document.querySelector("#projectsDiv");
 
-const rend = new Render(projectsDiv, cardDiv, cardTemp);
+// Renders projects to page
+export const rend = new Render(projectsDiv, cardDiv, cardTemp);
 rend.projects();
 rend.sidebar(sidebar);
 
@@ -49,54 +55,26 @@ initNewProjectsBtn(function () {
 });
 rend.sidebar(sidebar);
 
-// ------------------------------------------------------------------------------
-
-// testing tasks class
-// const dishes = new Task({
-//   name: "dishes",
-//   desc: "wash dishes after supper",
-//   dueDate: "daily",
-//   priority: "low",
-// });
-
-// const vaccume = new Task({
-//   desc: "Vaccume kitchen floor",
-//   name: "Vaccume kitchen",
-//   dueDate: "Weekly",
-//   priority: "low",
-// });
-
-// const js = new Task({
-//   name: "JavaScript",
-//   desc: "Study JavaScript",
-//   dueDate: "Daily",
-//   priority: "Medium",
-// });
-
-// // testing projects class
-// const chores = new Project({ name: "chores", tasklist: [dishes, vaccume] });
-// const study = new Project({ name: "study", tasklist: [js] });
-// populateStorage(chores.name, chores);
-// populateStorage(study.name, study);
-
-// // Renders the new projects in the sidebar
-// rend.projects();
-
-// ------------------------------------------------------------------------------
-
-// TODO: Write code to make the add Task button work
-// What project does the new task get assigned to?
-// Check the heading for the task name, search the name in the
-// projectsList array and add the task to that project
-// FIX: projects and tasks that are stated in the code over write any changes made
-//      on the site.
-
-import { initTaskForm } from "./gui/taskForm";
+// initialise popup form
 initTaskForm();
-const addTaskBtn = document.getElementById("openFormBtn");
-const saveTaskBtn = document.getElementById("addTaskBtn");
 
-saveTaskBtn.addEventListener("click", (e) => {
+// load projects into popup forms select
+document.getElementById("openFormBtn").addEventListener("click", (e) => {
+  let projects = getAllLocalStorageItems();
+  console.log(projects);
+
+  const select = document.getElementById("taskProjects");
+  projects.forEach((p) => {
+    const option = document.createElement("option");
+    const projectName = p.key;
+    option.textContent = projectName;
+    option.value = projectName;
+    select.appendChild(option);
+  });
+});
+
+// add task to project
+document.getElementById("addTaskBtn").addEventListener("click", (e) => {
   // e.preventDefault();
 
   const taskName = document.getElementById("taskName").value;
@@ -104,17 +82,6 @@ saveTaskBtn.addEventListener("click", (e) => {
   const taskPriority = document.getElementById("taskPriority").value;
   const taskDueDate = document.getElementById("taskDueDate").value;
   const taskProject = document.getElementById("taskProjects").value;
-
-  // validate the form values
-  const hasEmpty = [
-    taskDesc,
-    taskDueDate,
-    taskName,
-    taskPriority,
-    taskProject,
-  ].some((item) => item === null || item === "");
-
-  if (hasEmpty) return console.error("Fill in all values");
 
   const newTask = new Task({
     name: taskName,
@@ -124,31 +91,19 @@ saveTaskBtn.addEventListener("click", (e) => {
   });
 
   // add task to project
-
-  try {
-    const project = retrieveStorage(taskProject);
-    project.tasklist.push(newTask);
-    populateStorage(taskProject, project);
-    rend.task(project);
-  } catch (e) {
-    console.error("Error:", e);
-  } finally {
-    const popup = document.getElementById("popupForm");
-    popup.style.display = "none";
-  }
+  const project = JSON.parse(localStorage.getItem(taskProject)); // retriev project from local storage
+  project.tasklist.push(newTask); // add task to project
+  localStorage.setItem(taskProject, JSON.stringify(project)); // save project back to local storage
 });
 
-addTaskBtn.addEventListener("click", () => {
-  const projects = getAllLocalStorageItems();
-  const select = document.getElementById("taskProjects");
+// ------------------------------------------------------------------------------
 
-  projects.forEach((item) => {
-    const option = document.createElement("option");
-    option.value = item.key;
-    option.textContent = item.value.name;
-    select.appendChild(option);
-  });
-});
+// TODO: Write code to make the add Task button work
+// What project does the new task get assigned to?
+// Check the heading for the task name, search the name in the
+// projectsList array and add the task to that project
+// FIX: projects and tasks that are stated in the code over write any changes made
+//      on the site.
 
 // -----------------------------------------------------------
 
