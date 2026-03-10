@@ -34,8 +34,12 @@ const defaultProject = new Project({
   tasklist: [defaultTask],
 });
 
-// render initial project
-populateStorage(defaultProject.name, defaultProject);
+// check localStorage for defautl project
+const checkDefault = localStorage.getItem(defaultProject.name);
+if (!checkDefault) {
+  // add the default project to localstorage
+  populateStorage(defaultProject.name, defaultProject);
+}
 
 // testing new render class
 const projectsDiv = document.getElementById("projectsDiv");
