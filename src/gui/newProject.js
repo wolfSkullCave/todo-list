@@ -15,6 +15,7 @@ export function initNewProjectsBtn(callback) {
     // projectsList.push(newProject);
     populateStorage(newProject.name, newProject);
     nameInput.value = "";
-    callback();
+
+    callback(); // meant to re-render the projects
   });
 }

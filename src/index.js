@@ -12,13 +12,9 @@ import { Project } from "./Project";
 import { Task } from "./Task";
 import { Render } from "./gui/render";
 import { initNewProjectsBtn } from "./gui/newProject";
-import {
-  getAllLocalStorageItems,
-  populateStorage,
-  retrieveStorage,
-} from "./localstorage";
+import { populateStorage } from "./localstorage";
 import { initTaskForm } from "./gui/taskForm";
-import { addTask } from "./gui/newTaskBtn";
+import { loadProjects, addProject } from "./gui/addTasks";
 
 // create inital task
 const defaultTask = new Task({
@@ -34,9 +30,8 @@ const defaultProject = new Project({
   tasklist: [defaultTask],
 });
 
-// check localStorage for defautl project
-const checkDefault = localStorage.getItem(defaultProject.name);
-if (!checkDefault) {
+// check localStorage for default project
+if (localStorage.length === 0) {
   // add the default project to localstorage
   populateStorage(defaultProject.name, defaultProject);
 }
@@ -53,7 +48,6 @@ rend.projects();
 rend.sidebar(sidebar);
 
 // Add a new project via gui input field
-// TODO: refactor this function
 initNewProjectsBtn(function () {
   rend.projects();
 });
@@ -64,58 +58,17 @@ initTaskForm();
 
 // load projects into popup forms select
 document.getElementById("openFormBtn").addEventListener("click", (e) => {
-  let projects = getAllLocalStorageItems();
-  console.log(projects);
-
-  const select = document.getElementById("taskProjects");
-  projects.forEach((p) => {
-    const option = document.createElement("option");
-    const projectName = p.key;
-    option.textContent = projectName;
-    option.value = projectName;
-    select.appendChild(option);
-  });
+  loadProjects();
 });
 
 // add task to project
 document.getElementById("addTaskBtn").addEventListener("click", (e) => {
-  // e.preventDefault();
-
-  const taskName = document.getElementById("taskName").value;
-  const taskDesc = document.getElementById("taskDesc").value;
-  const taskPriority = document.getElementById("taskPriority").value;
-  const taskDueDate = document.getElementById("taskDueDate").value;
-  const taskProject = document.getElementById("taskProjects").value;
-
-  const newTask = new Task({
-    name: taskName,
-    desc: taskDesc,
-    dueDate: taskDueDate,
-    priority: taskPriority,
-  });
-
-  // add task to project
-  const project = JSON.parse(localStorage.getItem(taskProject)); // retriev project from local storage
-  project.tasklist.push(newTask); // add task to project
-  localStorage.setItem(taskProject, JSON.stringify(project)); // save project back to local storage
+  addProject();
 });
 
-// ------------------------------------------------------------------------------
-
-// TODO: Write code to make the add Task button work
-// What project does the new task get assigned to?
-// Check the heading for the task name, search the name in the
-// projectsList array and add the task to that project
-// FIX: projects and tasks that are stated in the code over write any changes made
-//      on the site.
-
-// -----------------------------------------------------------
-
-// TODO: Add a remove/delete project button
 // Todo: Build a way to change the name of a project (edit a project's name)
 // Todo: Build a way to edit a task
 // TODO: Add a delete task button
 // TODO: Add a complete task button/checkbox
-// TODO: Look into storing projects in local storage instead of an array.✅
 
 // ------------------------------------------------------------------------------

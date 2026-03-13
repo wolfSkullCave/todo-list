@@ -13,6 +13,9 @@ export function renderProjects2(container) {
     const key = localStorage.key(i);
     const value = retrieveStorage(key);
     createBtn(value.name, i, container);
+
+    // remove project button
+    createBtn("Delete Project", `del-${i}`, container);
   }
 }
 
