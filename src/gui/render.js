@@ -21,11 +21,13 @@ export class Render {
       // find the nearest button ancestor of the click target
       const btn = event.target.closest("button");
       if (!btn || !sidebarDiv.contains(btn)) return; // ignore clicks outside of buttons
-      if (btn.id.includes("del")) {
-        this.removeProject(btn);
-        this.projects(); // re-render sidebar
-        return;
-      }
+
+      // old delete project button
+      // if (btn.id.includes("del")) {
+      //   this.removeProject(btn);
+      //   this.projects(); // re-render sidebar
+      //   return;
+      // }
 
       // Clicking on the buttons in the sidebar renders tasks
       // this.task(this.projectList[btn.id]);
@@ -54,6 +56,7 @@ export class Render {
     return this.currentProject;
   }
 
+  // old delete project button
   removeProject(btn) {
     const index = btn.id.split("-")[1];
     const key = document.getElementById(index).textContent;

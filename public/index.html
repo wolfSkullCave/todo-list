@@ -40,7 +40,7 @@
               <h2 id="tasksHeading">Projects</h2>
 
               <!-- Button to open form -->
-              <button id="openFormBtn">Add Task</button>
+              <!-- <button id="openFormBtn">Add Task</button> -->
 
               <!-- Hidden pop-up form -->
               <div id="popupForm" class="popup">
@@ -94,6 +94,21 @@
             <!-- Container where cards will be inserted -->
             <div id="card-container"></div>
           </section>
+        </div>
+
+        <div class="controlPanel sidebar">
+          <h2>Project Control Panel</h2>
+          <button id="openFormBtn">Add Task</button>
+          <button>Delete Project</button>
+
+          <div class="inputGroup">
+            <input
+              id="renameProjectInput"
+              type="text"
+              placeholder="New Project Name"
+            />
+            <button id="renameProject">Rename Project</button>
+          </div>
         </div>
       </div>
     </main>

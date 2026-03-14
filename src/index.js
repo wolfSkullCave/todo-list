@@ -15,6 +15,8 @@ import { initNewProjectsBtn } from "./gui/newProject";
 import { populateStorage } from "./localstorage";
 import { initTaskForm } from "./gui/taskForm";
 import { loadProjects, addProject } from "./gui/addTasks";
+import { renameProject } from "./renameProject";
+import { controlPanel } from "./gui/controlPanel";
 
 // create inital task
 const defaultTask = new Task({
@@ -66,7 +68,9 @@ document.getElementById("addTaskBtn").addEventListener("click", (e) => {
   addProject();
 });
 
-// Todo: Build a way to change the name of a project (edit a project's name)
+
+controlPanel();
+
 // Todo: Build a way to edit a task
 // TODO: Add a delete task button
 // TODO: Add a complete task button/checkbox

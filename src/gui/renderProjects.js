@@ -15,7 +15,7 @@ export function renderProjects2(container) {
     createBtn(value.name, i, container);
 
     // remove project button
-    createBtn("Delete Project", `del-${i}`, container);
+    // createBtn("Delete Project", `del-${i}`, container);
   }
 }
 
