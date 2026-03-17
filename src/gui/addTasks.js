@@ -1,4 +1,5 @@
 import { getAllLocalStorageItems } from "../localstorage";
+import { Task } from "../Task";
 
 export function loadProjects() {
   let projects = getAllLocalStorageItems();

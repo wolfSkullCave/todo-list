@@ -11,8 +11,8 @@ import "./css/popUpForm.css";
 import { Project } from "./Project";
 import { Task } from "./Task";
 import { Render } from "./gui/render";
-import { initNewProjectsBtn } from "./gui/newProject";
-import { populateStorage } from "./localstorage";
+import { initNewProjectsBtn, initNewProjectsBtn2 } from "./gui/newProject";
+import { getAllLocalStorageItems, populateStorage } from "./localstorage";
 import { initTaskForm } from "./gui/taskForm";
 import { loadProjects, addProject } from "./gui/addTasks";
 import { renameProject } from "./renameProject";
@@ -50,12 +50,16 @@ rend.projects();
 rend.sidebar(sidebar);
 
 // Add a new project via gui input field
-initNewProjectsBtn(function () {
-  rend.projects();
-});
-rend.sidebar(sidebar);
+// initNewProjectsBtn(function () {
+//   rend.projects();
+// });
+// rend.sidebar(sidebar);
 
-// initialise popup form
+initNewProjectsBtn2()
+  .then((result) => rend.projects())
+  .catch((err) => console.error(err));
+
+// initialise popup form for adding tasks to a project
 initTaskForm();
 
 // load projects into popup forms select
@@ -65,14 +69,16 @@ document.getElementById("openFormBtn").addEventListener("click", (e) => {
 
 // add task to project
 document.getElementById("addTaskBtn").addEventListener("click", (e) => {
+  // e.preventDefault();
   addProject();
 });
-
 
 controlPanel();
 
 // Todo: Build a way to edit a task
-// TODO: Add a delete task button
-// TODO: Add a complete task button/checkbox
+//  - TODO: Add a delete task button
+//  - TODO: Add a complete task button/checkbox
+
+// TODO: Render the first task in localstorage by default.
 
 // ------------------------------------------------------------------------------

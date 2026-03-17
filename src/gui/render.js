@@ -63,4 +63,5 @@ export class Render {
     console.log(key);
     localStorage.removeItem(key);
   }
+
 }
