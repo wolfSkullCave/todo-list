@@ -1,4 +1,8 @@
-import { getAllLocalStorageItems } from "../localstorage";
+import {
+  getAllLocalStorageItems,
+  getProjects,
+  saveProject,
+} from "../localstorage";
 import { Task } from "../Task";
 
 export function loadProjects() {
@@ -7,7 +11,7 @@ export function loadProjects() {
   const select = document.getElementById("taskProjects");
   projects.forEach((p) => {
     const option = document.createElement("option");
-    const projectName = p.key;
+    const projectName = p.name;
     option.textContent = projectName;
     option.value = projectName;
     select.appendChild(option);
@@ -28,8 +32,22 @@ export function addProject() {
     priority: taskPriority,
   });
 
-  // add task to project
-  const project = JSON.parse(localStorage.getItem(taskProject)); // retriev project from local storage
-  project.tasklist.push(newTask); // add task to project
-  localStorage.setItem(taskProject, JSON.stringify(project)); // save project back to local storage
+  // get the array of projects from local storage
+  const projects = getAllLocalStorageItems();
+
+  // add new task to the selected project
+  const index = projects.findIndex((project) => project.name === taskProject);
+  projects[index].tasklist.push(newTask);
+
+  // clear storage and add back all projects
+  localStorage.clear();
+  localStorage.setItem("projects", JSON.stringify(projects));
+
+  // testing
+  console.log("Projects:", projects);
+  console.log("Index:", index);
+
+  // const project = JSON.parse(localStorage.getItem(taskProject)); // retriev project from local storage
+  // project.tasklist.push(newTask); // add task to project
+  // localStorage.setItem(taskProject, JSON.stringify(project)); // save project back to local storage
 }
