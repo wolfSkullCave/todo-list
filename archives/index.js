@@ -58,4 +58,3 @@ dom.projectsList[0].addTask({
 
 // Render the initial UI with all projects and the first project's tasks
 dom.renderProjects();
-console.log(dom.currentProject);

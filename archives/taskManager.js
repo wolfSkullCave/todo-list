@@ -7,7 +7,6 @@ export class TaskFormManager {
   init() {
     this.addTaskBtn.addEventListener("click", () => {
       const newTask = this.getData();
-      console.log(newTask);
     });
   }
 

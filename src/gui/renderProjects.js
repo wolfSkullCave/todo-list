@@ -1,4 +1,4 @@
-import { retrieveStorage } from "../localstorage";
+import { getProjects, retrieveStorage } from "../localstorage";
 
 export function renderProjects({ projectsList = [], container }) {
   container.innerHTML = "";
@@ -9,14 +9,18 @@ export function renderProjects({ projectsList = [], container }) {
 
 export function renderProjects2(container) {
   container.innerHTML = "";
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    const value = retrieveStorage(key);
-    createBtn(value.name, i, container);
+  // for (let i = 0; i < localStorage.length; i++) {
+  //   const key = localStorage.key(i);
+  //   const value = retrieveStorage(key);
+  //   console.log(key)
+  //   console.log(value)
+  //   createBtn(value.name, i, container);
 
-    // remove project button
-    // createBtn("Delete Project", `del-${i}`, container);
-  }
+  // }
+  const projects = JSON.parse(localStorage.getItem("projects"));
+  projects.forEach((task) => {
+    createBtn(task.name, task.id, container);
+  });
 }
 
 function createBtn(txt, id, parentDiv) {

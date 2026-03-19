@@ -11,11 +11,10 @@ import "./css/popUpForm.css";
 import { Project } from "./Project";
 import { Task } from "./Task";
 import { Render } from "./gui/render";
-import { initNewProjectsBtn, initNewProjectsBtn2 } from "./gui/newProject";
-import { getAllLocalStorageItems, populateStorage } from "./localstorage";
+import { initNewProjectsBtn2 } from "./gui/newProject";
+import { populateStorage } from "./localstorage";
 import { initTaskForm } from "./gui/taskForm";
 import { loadProjects, addProject } from "./gui/addTasks";
-import { renameProject } from "./renameProject";
 import { controlPanel } from "./gui/controlPanel";
 
 // create inital task
@@ -38,7 +37,6 @@ if (localStorage.length === 0) {
   populateStorage(defaultProject.name, defaultProject);
 }
 
-// testing new render class
 const projectsDiv = document.getElementById("projectsDiv");
 const cardDiv = document.getElementById("card-container");
 const cardTemp = document.getElementById("card-template");
@@ -48,12 +46,6 @@ const sidebar = document.querySelector("#projectsDiv");
 export const rend = new Render(projectsDiv, cardDiv, cardTemp);
 rend.projects();
 rend.sidebar(sidebar);
-
-// Add a new project via gui input field
-// initNewProjectsBtn(function () {
-//   rend.projects();
-// });
-// rend.sidebar(sidebar);
 
 initNewProjectsBtn2()
   .then((result) => rend.projects())

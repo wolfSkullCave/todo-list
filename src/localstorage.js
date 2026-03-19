@@ -1,17 +1,15 @@
 export function populateStorage(itemName, item) {
-  localStorage.setItem(item.name, JSON.stringify(item));
+  // localStorage.setItem(item.name, JSON.stringify(item));
+  saveProject(item);
 }
 
 export function retrieveStorage(item) {
-  if (localStorage.getItem(item)) {
-    return JSON.parse(localStorage.getItem(item));
-  } else {
-    console.error("Error:", item, "Does not exist in local storage.");
-  }
-}
-
-export function clearStorage() {
-  localStorage.clear();
+  // if (localStorage.getItem(item)) {
+  //   return JSON.parse(localStorage.getItem(item));
+  // } else {
+  //   console.error("Error:", item, "Does not exist in local storage.");
+  // }
+  return getProjects(item);
 }
 
 export function getAllLocalStorageItems() {
@@ -27,4 +25,21 @@ export function getAllLocalStorageItems() {
     items.push({ key, value });
   }
   return items;
+}
+
+export function saveProject(project) {
+  let projectsArr = [];
+  if (localStorage.length > 0) {
+    projectsArr = JSON.parse(localStorage.getItem("projects"));
+  }
+  projectsArr.push(project);
+  localStorage.setItem("projects", JSON.stringify(projectsArr));
+}
+
+export function getProjects(projectName) {
+  let projects =
+    JSON.parse(localStorage.getItem("projects")) ||
+    console.error("Project not found");
+
+  return projects.find((item) => item.name === projectName);
 }
