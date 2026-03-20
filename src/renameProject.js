@@ -1,9 +1,14 @@
+import { getAllLocalStorageItems } from "./localstorage";
+
 export function renameProject(projectName, newName) {
-  const project = JSON.parse(localStorage.getItem(projectName));
-  localStorage.removeItem(projectName);
+  // get the array of projects from local storage
+  const projects = getAllLocalStorageItems();
 
-  project.name = newName;
+  // add new task to the selected project
+  const index = projects.findIndex((project) => project.name === projectName);
+  projects[index].name = newName;
 
-  localStorage.setItem(project.name, JSON.stringify(project));
+  // clear storage and add back all projects
+  localStorage.clear();
+  localStorage.setItem("projects", JSON.stringify(projects));
 }
-

@@ -1,33 +1,12 @@
 export function populateStorage(itemName, item) {
-  // localStorage.setItem(item.name, JSON.stringify(item));
   saveProject(item);
 }
 
 export function retrieveStorage(item) {
-  // if (localStorage.getItem(item)) {
-  //   return JSON.parse(localStorage.getItem(item));
-  // } else {
-  //   console.error("Error:", item, "Does not exist in local storage.");
-  // }
   return getProjects(item);
 }
 
 export function getAllLocalStorageItems() {
-  // let items = [];
-  // for (let i = 0; i < localStorage.length; i++) {
-  //   let key = localStorage.key(i);
-  //   let value = localStorage.getItem(key);
-
-  //   try {
-  //     value = JSON.parse(value);
-  //   } catch (e) {
-  //     console.error(e);
-  //   }
-
-  //   items.push({ key, value });
-  // }
-  // return items;
-
   return JSON.parse(localStorage.getItem("projects"));
 }
 
@@ -59,9 +38,4 @@ function checkIfProjectExists(project) {
   });
 
   return false;
-}
-
-function editProject(project) {
-  const projects = getAllLocalStorageItems();
-  
 }

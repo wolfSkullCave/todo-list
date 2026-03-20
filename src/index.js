@@ -12,10 +12,12 @@ import { Project } from "./Project";
 import { Task } from "./Task";
 import { Render } from "./gui/render";
 import { initNewProjectsBtn2 } from "./gui/newProject";
-import { populateStorage } from "./localstorage";
+import { getAllLocalStorageItems, populateStorage } from "./localstorage";
 import { initTaskForm } from "./gui/taskForm";
 import { loadProjects, addProject } from "./gui/addTasks";
 import { controlPanel } from "./gui/controlPanel";
+import { renameProject } from "./renameProject";
+import { renderCards } from "./gui/renderTasks";
 
 // create inital task
 const defaultTask = new Task({
@@ -65,12 +67,47 @@ document.getElementById("addTaskBtn").addEventListener("click", (e) => {
   addProject();
 });
 
+// initialise control panel gui
 controlPanel();
+
+// initialise rename project button
+document.getElementById("renameProject").addEventListener("click", (e) => {
+  const newName = document.getElementById("renameProjectInput").value;
+  const currentProject = document.getElementById("tasksHeading").textContent;
+
+  if (currentProject === "Project") {
+    e.preventDefault();
+    return console.error("No project selected");
+  }
+
+  if (currentProject === undefined) {
+    e.preventDefault();
+    return console.error("Invalid name");
+  }
+
+  try {
+    renameProject(currentProject, newName);
+  } catch (e) {
+    console.error(e);
+  }
+
+  rend.sidebar();
+  rend.task(projectName);
+
+  // testing
+  e.preventDefault();
+  console.log("new name: ", newName);
+  console.log("current project:", currentProject);
+});
 
 // Todo: Build a way to edit a task
 //  - TODO: Add a delete task button
 //  - TODO: Add a complete task button/checkbox
 
-// TODO: Render the first task in localstorage by default.
+// Render the first task in localstorage by default.
+const projects = getAllLocalStorageItems();
+rend.task(projects[0]);
+rend.updateTasksHeading(projects[0].name);
+
 
 // ------------------------------------------------------------------------------

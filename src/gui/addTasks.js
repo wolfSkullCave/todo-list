@@ -42,12 +42,4 @@ export function addProject() {
   // clear storage and add back all projects
   localStorage.clear();
   localStorage.setItem("projects", JSON.stringify(projects));
-
-  // testing
-  console.log("Projects:", projects);
-  console.log("Index:", index);
-
-  // const project = JSON.parse(localStorage.getItem(taskProject)); // retriev project from local storage
-  // project.tasklist.push(newTask); // add task to project
-  // localStorage.setItem(taskProject, JSON.stringify(project)); // save project back to local storage
 }
