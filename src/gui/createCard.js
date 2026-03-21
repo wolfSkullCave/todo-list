@@ -12,6 +12,8 @@ export const createCard = ({ container, template, task }) => {
   let status = task.completed ? "Completed" : "Incomplete";
   card.querySelector(".card-status").textContent = "Status: " + status;
 
+  card.querySelector(".card-del").setAttribute("data-task-id", task.id);
+
   // Add the card to the container
   container.appendChild(card);
 };

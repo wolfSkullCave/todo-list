@@ -12,12 +12,20 @@ import { Project } from "./Project";
 import { Task } from "./Task";
 import { Render } from "./gui/render";
 import { initNewProjectsBtn2 } from "./gui/newProject";
-import { getAllLocalStorageItems, populateStorage } from "./localstorage";
+import {
+  getAllLocalStorageItems,
+  populateStorage,
+  saveProject,
+} from "./localstorage";
 import { initTaskForm } from "./gui/taskForm";
-import { loadProjects, addProject } from "./gui/addTasks";
+import { loadProjects, addTask } from "./gui/addTasks";
 import { controlPanel } from "./gui/controlPanel";
 import { renameProject } from "./renameProject";
-import { renderCards } from "./gui/renderTasks";
+
+// create initial project
+const defaultProject = new Project({
+  name: "default",
+});
 
 // create inital task
 const defaultTask = new Task({
@@ -25,13 +33,10 @@ const defaultTask = new Task({
   desc: "Try adding a task",
   dueDate: "Today",
   priority: "High",
+  projectId: defaultProject.id,
 });
 
-// create initial project
-const defaultProject = new Project({
-  name: "default",
-  tasklist: [defaultTask],
-});
+defaultProject.addTask(defaultTask);
 
 // check localStorage for default project
 if (localStorage.length === 0) {
@@ -64,7 +69,7 @@ document.getElementById("openFormBtn").addEventListener("click", (e) => {
 // add task to project
 document.getElementById("addTaskBtn").addEventListener("click", (e) => {
   // e.preventDefault();
-  addProject();
+  addTask();
 });
 
 // initialise control panel gui
@@ -100,14 +105,42 @@ document.getElementById("renameProject").addEventListener("click", (e) => {
   console.log("current project:", currentProject);
 });
 
+// Render the first task in localstorage by default.
+if (localStorage.length === 0) {
+  const projects = getAllLocalStorageItems();
+  rend.task(projects[0]);
+  rend.updateTasksHeading(projects[0].name);
+}
 // Todo: Build a way to edit a task
 //  - TODO: Add a delete task button
 //  - TODO: Add a complete task button/checkbox
 
-// Render the first task in localstorage by default.
-const projects = getAllLocalStorageItems();
-rend.task(projects[0]);
-rend.updateTasksHeading(projects[0].name);
+const cardDelBtn = document.querySelector(".card-del");
+document.querySelector("#card-container").addEventListener("click", (e) => {
+  const delBtn = e.target.closest(".card-del");
+  if (!delBtn) return;
 
+  let taskId = e.target.getAttribute("data-task-id");
+  let ids = e.target.getAttribute("data-task-id").split("-");
+  let projectId = ids[0];
+
+  // remove from dom
+  delBtn.parentElement.remove();
+
+  // remove from local storage
+  let projects = getAllLocalStorageItems();
+
+  let targetProject = projects.find((p) => p.id == projectId);
+  let taskIndex = targetProject.tasklist.findIndex((t) => t.id == taskId);
+  if (taskIndex !== -1) {
+    targetProject.tasklist.splice(taskIndex, 1);
+    let index = projects.findIndex((p) => p.id == projectId);
+    projects[index] = targetProject;
+    localStorage.setItem("projects", JSON.stringify(projects));
+    rend.task(targetProject);
+  }
+
+
+});
 
 // ------------------------------------------------------------------------------

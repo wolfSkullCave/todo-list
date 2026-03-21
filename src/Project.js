@@ -10,10 +10,4 @@ export class Project {
   addTask(task) {
     this.tasklist.push(task);
   }
-
-  getTasks() {
-    for (let task of this.tasklist) {
-      console.log(task);
-    }
-  }
 }
