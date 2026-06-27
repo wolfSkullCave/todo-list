@@ -38,3 +38,9 @@ div#projectsDiv {
     color: grey;
     background-color: rgba(0, 0, 0, 0.1);
 }
+
+/* Currently selected project */
+#projectsDiv button.active {
+    background-color: rgba(0, 0, 0, 0.15);
+    border-left: 3px solid #333;
+}

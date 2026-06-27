@@ -11,13 +11,23 @@ export function getAllLocalStorageItems() {
 }
 
 export function saveProject(project) {
-  let projectsArr = [];
-  if (localStorage.length > 0) {
-    projectsArr = JSON.parse(localStorage.getItem("projects"));
+  const projects = getAllLocalStorageItems() || [];
+
+  // Upsert: replace the project if it already exists, otherwise append it.
+  const index = projects.findIndex((p) => p.id == project.id);
+  if (index === -1) {
+    projects.push(project);
+  } else {
+    projects[index] = project;
   }
 
-  projectsArr.push(project);
-  localStorage.setItem("projects", JSON.stringify(projectsArr));
+  localStorage.setItem("projects", JSON.stringify(projects));
+}
+
+export function getProjectById(id) {
+  const projects = getAllLocalStorageItems();
+  if (!projects) return undefined;
+  return projects.find((p) => p.id == id);
 }
 
 export function getProjects(projectName) {

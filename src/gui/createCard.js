@@ -10,9 +10,16 @@ export const createCard = ({ container, template, task }) => {
   card.querySelector(".card-dueDate").textContent = "Due Date: " + task.dueDate;
 
   let status = task.completed ? "Completed" : "Incomplete";
-  card.querySelector(".card-status").textContent = "Status: " + status;
+  card.querySelector(".card-status").textContent = status;
+
+  if (card.querySelector(".card-status").textContent === "Incomplete") {
+    card.querySelector(".card-status").classList.add("incomplete");
+  } else {
+    card.querySelector(".card-status").classList.add("completed");
+  }
 
   card.querySelector(".card-del").setAttribute("data-task-id", task.id);
+  card.querySelector(".card-status").setAttribute("data-task-id", task.id);
 
   // Add the card to the container
   container.appendChild(card);

@@ -12,11 +12,7 @@ import { Project } from "./Project";
 import { Task } from "./Task";
 import { Render } from "./gui/render";
 import { initNewProjectsBtn2 } from "./gui/newProject";
-import {
-  getAllLocalStorageItems,
-  populateStorage,
-  saveProject,
-} from "./localstorage";
+import { getAllLocalStorageItems, populateStorage } from "./localstorage";
 import { initTaskForm } from "./gui/taskForm";
 import { loadProjects, addTask } from "./gui/addTasks";
 import { controlPanel } from "./gui/controlPanel";
@@ -47,15 +43,13 @@ if (localStorage.length === 0) {
 const projectsDiv = document.getElementById("projectsDiv");
 const cardDiv = document.getElementById("card-container");
 const cardTemp = document.getElementById("card-template");
-const sidebar = document.querySelector("#projectsDiv");
 
-// Renders projects to page
+// Single render controller: owns sidebar + card event delegation.
 export const rend = new Render(projectsDiv, cardDiv, cardTemp);
-rend.projects();
-rend.sidebar(sidebar);
+rend.bindEvents();
 
 initNewProjectsBtn2()
-  .then((result) => rend.projects())
+  .then((newProject) => rend.selectProject(newProject.id))
   .catch((err) => console.error(err));
 
 // initialise popup form for adding tasks to a project
@@ -68,8 +62,11 @@ document.getElementById("openFormBtn").addEventListener("click", (e) => {
 
 // add task to project
 document.getElementById("addTaskBtn").addEventListener("click", (e) => {
-  // e.preventDefault();
   addTask();
+
+  // Re-render the current project so the new task shows immediately.
+  const currentId = rend.getCurrentProjectId();
+  if (currentId) rend.selectProject(currentId);
 });
 
 // initialise control panel gui
@@ -77,70 +74,30 @@ controlPanel();
 
 // initialise rename project button
 document.getElementById("renameProject").addEventListener("click", (e) => {
-  const newName = document.getElementById("renameProjectInput").value;
-  const currentProject = document.getElementById("tasksHeading").textContent;
+  e.preventDefault();
 
-  if (currentProject === "Project") {
-    e.preventDefault();
-    return console.error("No project selected");
-  }
+  const newName = document.getElementById("renameProjectInput").value.trim();
+  const currentId = rend.getCurrentProjectId();
 
-  if (currentProject === undefined) {
-    e.preventDefault();
-    return console.error("Invalid name");
-  }
+  if (!currentId) return console.error("No project selected");
+  if (!newName) return console.error("Invalid name");
 
   try {
-    renameProject(currentProject, newName);
-  } catch (e) {
-    console.error(e);
+    renameProject(currentId, newName);
+  } catch (err) {
+    return console.error(err);
   }
 
-  rend.sidebar();
-  rend.task(projectName);
-
-  // testing
-  e.preventDefault();
-  console.log("new name: ", newName);
-  console.log("current project:", currentProject);
+  // Re-render so the sidebar label and heading reflect the new name.
+  rend.selectProject(currentId);
 });
 
-// Render the first task in localstorage by default.
-if (localStorage.length === 0) {
-  const projects = getAllLocalStorageItems();
-  rend.task(projects[0]);
-  rend.updateTasksHeading(projects[0].name);
+// Select the first project by default (if any exist).
+const initialProjects = getAllLocalStorageItems();
+if (initialProjects && initialProjects.length > 0) {
+  rend.selectProject(initialProjects[0].id);
 }
-// Todo: Build a way to edit a task
-//  - TODO: Add a delete task button
-//  - TODO: Add a complete task button/checkbox
 
-const cardDelBtn = document.querySelector(".card-del");
-document.querySelector("#card-container").addEventListener("click", (e) => {
-  const delBtn = e.target.closest(".card-del");
-  if (!delBtn) return;
-
-  let taskId = e.target.getAttribute("data-task-id");
-  let ids = e.target.getAttribute("data-task-id").split("-");
-  let projectId = ids[0];
-
-  // remove from dom
-  delBtn.parentElement.remove();
-
-  // remove from local storage
-  let projects = getAllLocalStorageItems();
-
-  let targetProject = projects.find((p) => p.id == projectId);
-  let taskIndex = targetProject.tasklist.findIndex((t) => t.id == taskId);
-  if (taskIndex !== -1) {
-    targetProject.tasklist.splice(taskIndex, 1);
-    let index = projects.findIndex((p) => p.id == projectId);
-    projects[index] = targetProject;
-    localStorage.setItem("projects", JSON.stringify(projects));
-    rend.task(targetProject);
-  }
-
-
-});
-
+// Card status (complete) and delete clicks are handled by Render's delegated
+// listeners (see gui/render.js) — bound once via rend.bindEvents().
 // ------------------------------------------------------------------------------

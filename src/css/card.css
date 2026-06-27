@@ -18,3 +18,13 @@ div#card-container {
 .card-title {
   text-transform: capitalize;
 }
+
+.incomplete {
+  background-color: lightgrey;
+  /* padding: 10px; */
+}
+
+.completed {
+  background-color: greenyellow;
+  /* padding: 10px; */
+}
