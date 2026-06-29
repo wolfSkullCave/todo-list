@@ -101,3 +101,4 @@ if (initialProjects && initialProjects.length > 0) {
 // Card status (complete) and delete clicks are handled by Render's delegated
 // listeners (see gui/render.js) — bound once via rend.bindEvents().
 // ------------------------------------------------------------------------------
+//
