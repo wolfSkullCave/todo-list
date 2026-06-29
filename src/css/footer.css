@@ -1,0 +1,22 @@
+/* ============================================
+   FOOTER STYLES
+   Footer layout and link styling
+   ============================================ */
+
+footer {
+    background: #333;
+    color: #fff;
+    text-align: center;
+    padding: 1rem;
+    margin-top: 2rem;
+}
+
+footer .socials a {
+    color: #ff6600;
+    margin: 0 0.5rem;
+    text-decoration: none;
+}
+
+footer .socials a:hover {
+    text-decoration: underline;
+}

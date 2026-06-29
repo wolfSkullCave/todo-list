@@ -1,0 +1,39 @@
+/* ============================================
+   FORM AND INPUT STYLES
+   Input groups, buttons, and form controls
+   ============================================ */
+
+.inputGroup {
+    display: flex;
+    gap: 1rem;
+}
+
+.inputGroup input {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.inputGroup button {
+    padding: 0.5rem 1rem;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+}
+
+.inputGroup button:hover {
+    background-color: #555;
+}
+
+.taskHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}

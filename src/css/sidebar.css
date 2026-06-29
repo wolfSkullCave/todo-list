@@ -1,0 +1,46 @@
+/* ============================================
+   SIDEBAR STYLES
+   Project list, sidebar layout, and project buttons
+   ============================================ */
+
+.sidebar {
+    border: 1px solid black;
+    background-color: #f0f0f0;
+    padding: 1rem;
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+    border-radius: 8px;
+}
+
+/* Projects container - vertical flex layout */
+div#projectsDiv {
+    display: flex;
+    flex-direction: column;
+    grid-template-columns: 3fr 1fr;
+    gap: 1rem;
+}
+
+/* Project buttons in the sidebar */
+#projectsDiv button {
+    text-align: left;
+    border: none;
+    color: black;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: color 0.2s ease;
+    text-transform: capitalize;
+}
+
+#projectsDiv button:hover {
+    color: grey;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Currently selected project */
+#projectsDiv button.active {
+    background-color: rgba(0, 0, 0, 0.15);
+    border-left: 3px solid #333;
+}

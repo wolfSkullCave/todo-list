@@ -3,6 +3,7 @@
   padding: 1rem;
   border-radius: 8px;
 }
+
 .card-img {
   width: 100%;
   border-radius: 4px;
@@ -11,9 +12,19 @@
 div#card-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 0.5rem;
+  gap: 1.5rem;
 }
 
 .card-title {
   text-transform: capitalize;
+}
+
+.incomplete {
+  background-color: lightgrey;
+  /* padding: 10px; */
+}
+
+.completed {
+  background-color: greenyellow;
+  /* padding: 10px; */
 }

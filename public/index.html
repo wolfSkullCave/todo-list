@@ -31,9 +31,7 @@
             />
             <button id="addProjectBtn">Add Project</button>
           </div>
-          <div id="projectsDiv">
-            <ul id="projectsUl"></ul>
-          </div>
+          <div id="projectsDiv"></div>
         </div>
 
         <div id="tasksDiv">
@@ -42,7 +40,7 @@
               <h2 id="tasksHeading">Projects</h2>
 
               <!-- Button to open form -->
-              <button id="openFormBtn">Add Task</button>
+              <!-- <button id="openFormBtn">Add Task</button> -->
 
               <!-- Hidden pop-up form -->
               <div id="popupForm" class="popup">
@@ -50,20 +48,31 @@
                   <span id="closeFormBtn" class="close">&times;</span>
                   <h2>Add a New Task</h2>
                   <form id="taskForm">
-                    <label for="taskName">Task Name:</label>
+                    <label for="taskName">Task Name:*</label>
                     <input type="text" id="taskName" name="taskName" required />
 
-                    <label for="taskDesc">Description:</label>
-                    <textarea id="taskDesc" name="taskDesc"></textarea>
+                    <label for="taskDesc">Description:*</label>
+                    <textarea id="taskDesc" name="taskDesc" required></textarea>
 
-                    <label for="taskPriority">Priority:</label>
-                    <select name="taskPriority" id="taskPriority">
+                    <label for="taskProjects">Select Project:*</label>
+                    <select name="taskProjects" id="taskProjects"></select>
+
+                    <label for="taskDueDate">Due Date:*</label>
+                    <input
+                      type="datetime-local"
+                      id="taskDueDate"
+                      name="taskDueDate"
+                      required
+                    />
+
+                    <label for="taskPriority">Priority:*</label>
+                    <select name="taskPriority" id="taskPriority" required>
                       <option value="low">Low</option>
                       <option value="medium">Medium</option>
                       <option value="high">High</option>
                     </select>
+                    <button type="submit" id="addTaskBtn">Add Task</button>
                   </form>
-                  <button type="submit">Save Task</button>
                 </div>
               </div>
             </div>
@@ -72,19 +81,40 @@
             <!-- Hidden template -->
             <template id="card-template">
               <div class="card">
-                <!-- <img class="card-img" src="" alt="Card image" /> -->
                 <h3 class="card-title"></h3>
                 <p class="card-description"></p>
 
-                <p class="card-duDate"></p>
+                <p class="card-dueDate"></p>
                 <p class="card-priority"></p>
-                <p class="card-status"></p>
+
+                <div>
+                  <span>Status: </span>
+                  <button class="card-status" id="card-status"></button>
+                </div>
+
+                <button class="card-del">Delete Task</button>
               </div>
             </template>
 
             <!-- Container where cards will be inserted -->
             <div id="card-container"></div>
           </section>
+        </div>
+
+        <div class="controlPanel sidebar">
+          <h2>Project Control Panel</h2>
+          <button id="openFormBtn">Add Task</button>
+          <button>Delete Project</button>
+
+          <div class="inputGroup">
+            <input
+              id="renameProjectInput"
+              type="text"
+              placeholder="New Project Name*"
+              required
+            />
+            <button id="renameProject">Rename Project</button>
+          </div>
         </div>
       </div>
     </main>
